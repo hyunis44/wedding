@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>4월 18일까지 준비 일정</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F3F5F8; --surface:#FFFFFF; --ink:#1F2A44; --muted:#667085; --line:#D9DEE6; --grid:#EBEEF3;
+  --c-pay:#7A4E91; --c-photo:#2F6EA5; --c-dress:#8A6D3B; --c-ready:#3F7E5E; --c-guest:#B5651D; --c-buffet:#B23E63; --c-week:#1F2A44; --c-home:#2F7F8C;
+  --today:#D2343B; --done:#9AA1AE;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#11151D; --surface:#19202C; --ink:#E7EAF0; --muted:#98A1B3; --line:#2D3546; --grid:#212938;
+    --c-pay:#B48BC9; --c-photo:#6FA6D6; --c-dress:#C7A56A; --c-ready:#76B595; --c-guest:#E09A55; --c-buffet:#E27C9E; --c-week:#C9D2E6; --c-home:#6FC3CF;
+    --today:#FF6B6B; --done:#5E6676;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#11151D; --surface:#19202C; --ink:#E7EAF0; --muted:#98A1B3; --line:#2D3546; --grid:#212938;
+  --c-pay:#B48BC9; --c-photo:#6FA6D6; --c-dress:#C7A56A; --c-ready:#76B595; --c-guest:#E09A55; --c-buffet:#E27C9E; --c-week:#C9D2E6; --c-home:#6FC3CF;
+  --today:#FF6B6B; --done:#5E6676;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;font-size:15px;line-height:1.55}
+.wrap{max-width:1100px;margin:0 auto;padding:28px 18px 60px}
+header.top{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:end;border-bottom:2px solid var(--ink);padding-bottom:18px;margin-bottom:22px}
+h1{font-family:"Gowun Batang","Nanum Myeongjo",serif;font-weight:700;font-size:clamp(26px,5vw,40px);line-height:1.15;margin:0 0 6px;letter-spacing:-0.01em}
+.sub{color:var(--muted);margin:0}
+.dday{text-align:right}
+.dday .num{font-family:"Gowun Batang",serif;font-size:clamp(40px,9vw,68px);line-height:1;font-weight:700}
+.dday .lbl{color:var(--muted);font-size:13px}
+.progress{display:flex;align-items:center;gap:10px;margin:0 0 18px;font-size:14px;color:var(--muted)}
+.bar{flex:1;height:6px;background:var(--grid);border-radius:3px;overflow:hidden;max-width:320px}
+.bar i{display:block;height:100%;background:var(--c-ready);width:0;transition:width .3s}
+.tabs{display:flex;gap:6px;margin-bottom:14px}
+.tabs button{font:inherit;font-weight:600;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:8px 16px;border-radius:999px;cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+button:focus-visible,input:focus-visible,.cell:focus-visible,.row:focus-visible{outline:2px solid var(--c-photo);outline-offset:2px}
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:13px;color:var(--muted);margin:0 0 12px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:14px;height:8px;border-radius:2px;display:inline-block}
+.sw.rec{background:repeating-linear-gradient(135deg,var(--muted) 0 3px,transparent 3px 6px);border:1px solid var(--muted)}
+.sw.fix{background:var(--muted)}
+.sw.ms{width:10px;height:10px;transform:rotate(45deg);background:var(--muted);border-radius:1px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px}
+
+/* Gantt */
+.gscroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.gantt{position:relative;width:max-content;min-width:100%}
+.grow{display:flex;min-height:30px;border-bottom:1px solid var(--grid)}
+.glbl{position:sticky;left:0;z-index:3;width:210px;flex:0 0 210px;background:var(--surface);display:flex;align-items:center;gap:6px;padding:4px 8px;border-right:1px solid var(--line);font-size:13px}
+.glbl .t{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer;flex:1}
+.glbl input{margin:0;accent-color:var(--c-ready);flex:0 0 auto;width:15px;height:15px}
+.track{position:relative;flex:0 0 auto}
+.ghead{position:sticky;top:0;z-index:4;background:var(--surface);border-bottom:1px solid var(--line)}
+.ghead .glbl{font-weight:600;color:var(--muted);z-index:5}
+.month{position:absolute;top:0;bottom:0;display:flex;align-items:center;padding-left:6px;font-size:12px;font-weight:600;color:var(--muted);border-left:1px solid var(--line)}
+.ggroup .glbl{font-family:"Gowun Batang",serif;font-weight:700;font-size:14px;background:var(--bg)}
+.ggroup .track{background:var(--bg)}
+.gbar{position:absolute;top:8px;height:14px;border-radius:3px;cursor:pointer}
+.gbar.rec{background:repeating-linear-gradient(135deg,var(--c) 0 4px,color-mix(in srgb,var(--c) 35%,transparent) 4px 8px);border:1px solid var(--c)}
+.gbar.fix{background:var(--c)}
+.gms{position:absolute;top:9px;width:12px;height:12px;transform:rotate(45deg);background:var(--c);border-radius:2px;cursor:pointer;box-shadow:0 0 0 2px var(--surface)}
+.gms.big{width:16px;height:16px;top:7px}
+.isdone .gbar,.isdone .gms{opacity:.35}
+.isdone .glbl .t{text-decoration:line-through;color:var(--done)}
+.overlay{position:absolute;top:0;bottom:0;pointer-events:none;z-index:2}
+.mline{position:absolute;top:0;bottom:0;width:1px;background:var(--line)}
+.tline{position:absolute;top:0;bottom:0;width:2px;background:var(--today)}
+.tline b{position:absolute;top:2px;left:4px;font-size:11px;color:var(--today);background:var(--surface);padding:0 3px;border-radius:3px;white-space:nowrap}
+.dline{position:absolute;top:0;bottom:0;width:2px;background:var(--c-buffet);opacity:.5}
+
+/* detail */
+.detail{margin-top:14px;padding:14px 16px;display:none}
+.detail.on{display:block}
+.detail h3{font-family:"Gowun Batang",serif;margin:0 0 4px;font-size:18px}
+.detail .meta{color:var(--muted);font-size:13px;margin-bottom:6px}
+.detail p{margin:0}
+.tag{display:inline-block;font-size:12px;padding:1px 8px;border-radius:999px;border:1px solid currentColor;margin-left:6px}
+
+/* Calendar */
+.calnav{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.calnav h2{font-family:"Gowun Batang",serif;margin:0;font-size:24px}
+.calnav button{font:inherit;border:1px solid var(--line);background:var(--surface);color:var(--ink);width:40px;height:40px;border-radius:50%;cursor:pointer;font-size:18px}
+.calnav button:disabled{opacity:.3;cursor:default}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);border-top:1px solid var(--line);border-left:1px solid var(--line)}
+.dow{font-size:12px;font-weight:600;text-align:center;padding:6px 0;color:var(--muted);border-right:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--surface)}
+.dow.sun{color:var(--c-buffet)}.dow.sat{color:var(--c-photo)}
+.cell{min-height:96px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--surface);padding:4px;cursor:pointer;display:flex;flex-direction:column;gap:2px;overflow:hidden}
+.cell.out{background:var(--bg);cursor:default}
+.cell .dn{font-size:12px;font-weight:600}
+.cell.sun .dn{color:var(--c-buffet)}.cell.sat .dn{color:var(--c-photo)}
+.cell.today{box-shadow:inset 0 0 0 2px var(--today)}
+.cell.sel{background:color-mix(in srgb,var(--c-photo) 10%,var(--surface))}
+.cell.wedding{background:color-mix(in srgb,var(--c-buffet) 14%,var(--surface))}
+.chip{font-size:11px;line-height:1.3;padding:1px 4px;border-radius:3px;color:#fff;background:var(--c);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chip.done{opacity:.4;text-decoration:line-through}
+.dots{display:flex;gap:2px;margin-top:auto;flex-wrap:wrap}
+.dots i{height:3px;flex:1 1 8px;max-width:22px;border-radius:2px;background:var(--c);opacity:.55}
+.mlist{margin-top:16px;padding:6px 0}
+.mlist h3{font-family:"Gowun Batang",serif;font-size:17px;margin:8px 16px}
+.mi{display:grid;grid-template-columns:auto 1fr;gap:4px 10px;padding:10px 16px;border-top:1px solid var(--grid);align-items:start}
+.mi input{margin-top:4px;accent-color:var(--c-ready);width:16px;height:16px}
+.mi .tt{font-weight:600;cursor:pointer}
+.mi .tt::before{content:"";display:inline-block;width:8px;height:8px;border-radius:2px;background:var(--c);margin-right:7px;vertical-align:1px}
+.mi .dd{grid-column:2;font-size:13px;color:var(--muted)}
+.mi.isdone .tt{text-decoration:line-through;color:var(--done)}
+.foot{margin-top:22px;font-size:13px;color:var(--muted)}
+.foot p{margin:4px 0}
+/* Budget */
+.bsum{padding:16px 18px;margin-bottom:14px}
+.stack{display:flex;height:14px;border-radius:7px;overflow:hidden;background:var(--grid);margin:2px 0 16px}
+.stack i{display:block;height:100%}
+.figs{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.fig .k{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:6px}
+.fig .v{font-family:"Gowun Batang",serif;font-size:clamp(20px,4vw,28px);font-weight:700;line-height:1.25}
+.fig .s{font-size:12px;color:var(--muted)}
+.next{margin:14px 0 0;padding-top:12px;border-top:1px solid var(--grid);font-size:14px}
+.next b{font-weight:600}
+.blist{margin-bottom:14px;padding:4px 0}
+.blist h3,.badd h3{font-family:"Gowun Batang",serif;font-size:18px;margin:10px 16px 8px;display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.blist h3 small{font-family:"IBM Plex Sans KR",sans-serif;font-size:15px;font-weight:600}
+.bnote{margin:0 16px 8px;font-size:13px;color:var(--muted)}
+.bmon{display:flex;justify-content:space-between;padding:7px 16px;font-size:13px;font-weight:600;color:var(--muted);border-top:1px solid var(--line);background:var(--bg)}
+.brow{display:grid;grid-template-columns:1fr auto auto;gap:6px 12px;align-items:center;padding:10px 16px;border-top:1px solid var(--grid)}
+.brow.off .bt,.brow.off .amt{opacity:.45}
+.bt{font-weight:600}
+.kind{font-size:11px;font-weight:500;padding:1px 7px;border-radius:999px;border:1px solid var(--line);color:var(--muted);margin-left:6px;vertical-align:1px;white-space:nowrap}
+.bm{font-size:13px;color:var(--muted)}
+.amt{display:flex;align-items:center;gap:4px;font-size:13px;color:var(--muted);white-space:nowrap}
+.amt input{width:80px;font:inherit;font-size:15px;font-weight:600;text-align:right;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:5px 7px}
+.bacts{display:flex;gap:6px;align-items:center;justify-content:flex-end}
+.bbtn{font:inherit;font-size:13px;font-weight:600;border:1px solid var(--ink);background:var(--surface);color:var(--ink);border-radius:999px;padding:5px 12px;cursor:pointer;white-space:nowrap}
+.bbtn.pay{background:var(--ink);color:var(--bg)}
+.binc{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:4px;white-space:nowrap;cursor:pointer}
+.binc input{accent-color:var(--c-dress)}
+.badd{padding:4px 16px 16px}
+.badd h3{margin-left:0}
+.addrow{display:grid;grid-template-columns:2fr 1fr 1fr auto;gap:8px}
+.addrow input{font:inherit;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:6px;padding:7px 9px;min-width:0}
+@media (max-width:640px){
+  .brow{grid-template-columns:1fr auto}
+  .bacts{grid-column:1/-1}
+  .figs{grid-template-columns:1fr 1fr}
+  .addrow{grid-template-columns:1fr 1fr}
+}
+.tabbar{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:14px}
+.tabbar .tabs{margin-bottom:0}
+.xlwrap{margin-left:auto;display:flex;align-items:center;gap:10px}
+.xl{font:inherit;font-weight:600;border:1.5px solid var(--c-ready);color:var(--c-ready);background:var(--surface);padding:7px 15px;border-radius:999px;cursor:pointer;white-space:nowrap}
+.xl:hover{background:color-mix(in srgb,var(--c-ready) 10%,var(--surface))}
+.xl:disabled{opacity:.6;cursor:wait}
+.xlmsg{font-size:13px;color:var(--muted)}
+/* Vendors */
+.vend{margin-top:14px;padding:4px 0 8px}
+.vend h3{font-family:"Gowun Batang",serif;font-size:18px;margin:12px 16px 2px}
+.vnote{margin:0 16px 8px;font-size:13px;color:var(--muted)}
+.vrow{display:grid;grid-template-columns:minmax(150px,1fr) 1.5fr auto;gap:6px 14px;align-items:center;padding:10px 16px;border-top:1px solid var(--grid)}
+.vn{font-weight:600}.vc{font-size:12px;color:var(--muted)}
+.va{font-size:13px;color:var(--muted)}
+.vt{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px}
+.vt span{font-size:11px;padding:1px 8px;border-radius:999px;border:1px solid var(--line);cursor:pointer;color:var(--ink);background:var(--surface)}
+.vb{display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+.vb a{font-size:13px;font-weight:600;text-decoration:none;border:1px solid var(--ink);border-radius:999px;padding:4px 11px;color:var(--ink);white-space:nowrap}
+.vb a.ok{background:var(--ink);color:var(--bg)}
+.vb input{width:118px;font:inherit;font-size:13px;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:6px;padding:4px 7px}
+.vcards{margin-top:12px;border-top:1px solid var(--grid);padding-top:10px}
+.vct{font-size:13px;font-weight:600;color:var(--muted);margin-bottom:6px}
+.vcard{display:grid;grid-template-columns:1fr auto;gap:2px 12px;align-items:center;padding:9px 12px;border:1px solid var(--line);border-radius:8px;margin-bottom:6px;background:var(--bg)}
+.vcard .vn .vc{font-weight:400;margin-left:6px}
+.vcard .vb{grid-row:1/3;grid-column:2}
+@media (max-width:640px){.vcard{grid-template-columns:1fr}.vcard .vb{grid-row:auto;grid-column:auto;justify-content:flex-start;margin-top:6px}}
+@media (max-width:640px){.vrow{grid-template-columns:1fr}.vb{justify-content:flex-start}}
+[hidden]{display:none!important}
+@media (max-width:640px){
+  .glbl{width:150px;flex-basis:150px;font-size:12px}
+  .cell{min-height:64px;padding:3px}
+  .chip{font-size:0;height:5px;padding:0;border-radius:2px}
+  header.top{grid-template-columns:1fr}
+  .dday{text-align:left}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div>
+      <h1>4월 18일까지 준비 일정</h1>
+      <p class="sub">K웨딩홀 2027년 4월 18일(일) 12시 / 주례 없는 예식</p>
+    </div>
+    <div class="dday"><div class="num" id="dday">D-</div><div class="lbl" id="ddayLbl"></div></div>
+  </header>
+
+  <div class="progress"><span id="progTxt"></span><div class="bar"><i id="progBar"></i></div></div>
+
+  <div class="tabbar">
+  <div class="tabs" role="tablist">
+    <button role="tab" aria-selected="true" data-view="gantt">간트 차트</button>
+    <button role="tab" aria-selected="false" data-view="cal">달력</button>
+    <button role="tab" aria-selected="false" data-view="budget">예산</button>
+  </div>
+  <div class="xlwrap"><span id="xlMsg" class="xlmsg" role="status"></span><button class="xl" id="xlBtn" hidden>엑셀 다운로드</button></div>
+  </div>
+
+  <div class="legend" id="legend"></div>
+
+  <section id="view-gantt">
+    <div class="panel gscroll"><div class="gantt" id="gantt"></div></div>
+  </section>
+
+  <section id="view-cal" hidden>
+    <div class="calnav">
+      <button id="prev" aria-label="이전 달">‹</button>
+      <h2 id="calTitle"></h2>
+      <button id="next" aria-label="다음 달">›</button>
+    </div>
+    <div class="panel" style="overflow:hidden"><div class="cal" id="cal"></div></div>
+    <div class="panel mlist" id="mlist"></div>
+  </section>
+
+  <section id="view-budget" hidden>
+    <div class="panel bsum" id="bSum"></div>
+    <div class="panel blist" id="bDue"></div>
+    <div class="panel blist" id="bPaid"></div>
+    <div class="panel blist" id="bHome"></div>
+    <div class="panel badd">
+      <h3>견적 받은 항목 추가</h3>
+      <div class="addrow">
+        <input id="nT" placeholder="항목 (예: 예복 대여)" aria-label="항목">
+        <input id="nA" type="number" min="0" inputmode="numeric" placeholder="금액(만 원)" aria-label="금액">
+        <input id="nD" type="date" aria-label="지불 예정일">
+        <button class="bbtn pay" id="nAdd">추가</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="panel detail" id="detail" aria-live="polite"></div>
+
+  <div class="foot">
+    <p>실선은 계약서/안내문에 적힌 기한, 빗금은 일반적인 준비 순서를 기준으로 잡은 권장 일정입니다.</p>
+    <p>체크한 항목과 예산 입력값은 이 브라우저에만 저장됩니다. 예산에서 지불 완료를 누르면 연결된 일정도 완료로 표시됩니다.</p>
+  </div>
+</div>
+
+<script>
+const CATS={
+  pay:{n:"계약/결제",v:"--c-pay"},
+  photo:{n:"스튜디오/사진",v:"--c-photo"},
+  dress:{n:"드레스/예물/혼수",v:"--c-dress"},
+  ready:{n:"본식 준비",v:"--c-ready"},
+  guest:{n:"청첩장/하객",v:"--c-guest"},
+  buffet:{n:"뷔페",v:"--c-buffet"},
+  week:{n:"예식 주간",v:"--c-week"},
+  home:{n:"신혼집 전세",v:"--c-home"}
+};
+// b: fix = 계약서/안내문 기한, rec = 권장
+const T=[
+ {id:"p0",c:"pay",t:"웨딩홀 계약금 35만 원 입금",s:"2026-10-09",ms:1,b:"fix",done:1,n:"입금 완료."},
+ {id:"p1",c:"pay",t:"뷔페 계약금 50만 원 입금",s:"2026-10-09",ms:1,b:"fix",done:1,n:"입금 완료. 예식 당일 식사비 총액에서 50만 원 차감."},
+ {id:"p2",c:"pay",t:"촬영 중도금 150만 원 결제",s:"2026-10-25",ms:1,b:"fix",done:1,n:"10-25(일) 웨딩홀 상담실에서 카드 결제 완료. 계약서 기준 촬영 10일 전까지 완불. 평일인 10/16까지 처리 권장. 카드 결제는 웨딩홀 방문 필요."},
+ {id:"p3",c:"pay",t:"위약금 없는 마지막 날 (D-150)",s:"2026-11-19",ms:1,b:"fix",n:"이후 해제 시 계약 총액의 10%부터 위약금. 패키지라 일부만 해제 불가. 스튜디오 촬영은 이미 위약금 기간."},
+ {id:"p4",c:"pay",t:"예식 최종 체크 방문 + 잔금 결제",s:"2027-04-08",ms:1,b:"fix",n:"예식 10일 전까지. 잔금 170만 원 + 추가분(아버님 헤어메이크업 1인 5만, 플라워샤워 10만 등). 총 정산 금액 확인 요청."},
+
+ {id:"s1",c:"photo",t:"촬영 의상/원본 구매 결정",s:"2026-10-10",e:"2026-10-16",b:"rec",done:1,n:"원본 구매하기로 결정(10-27 결제). 한복 또는 커플룩 중 하나(혼자 입을 수 있는 옷), 턱시도 1벌 개인 정장 여부, 원본 구매(33만 원) 여부, 루미디아 방문 여부. 루미디아는 한 벌당이 아니라 방문 1회 5만 원이고 추가금 있는 드레스를 고르면 그 금액만 별도(색감 있는 드레스 위주). 스튜디오 촬영 드레스는 투어 개념 없음."},
+ {id:"s2",c:"photo",t:"한복 대여 예약 (한복 선택 시)",s:"2026-10-12",e:"2026-10-21",b:"rec",n:"스튜디오 한복보다 한복집 대여 권장. 연계 업체 할인: 대여 3만, 맞춤 5만."},
+ {id:"s3",c:"photo",t:"스튜디오 촬영 (소울, 오전)",s:"2026-10-27",ms:1,big:1,b:"fix",done:1,n:"10-27 촬영 완료 (7:30 범일 9층 소울 메이크업실). 현장 결제: 헬퍼비 11만, 원본 33만, 드레스 추가금 38.5만(메리스 16.5 + 첫 드레스 22). 대략 7:00~7:30 시작, 14:00~15:00 종료 (정확한 시간은 스튜디오가 사전 안내). 현장 결제: 도우미비 11만 원(필수), 원본 33만 원(선택), 촬영 드레스 업그레이드 11~20만 원(현장에서 비교 가능). 헤어메이크업은 스튜디오 자체에서 진행(신랑 포함), 헤메 후 드레스 피팅. 신부 속옷은 스킨색, 누브라 준비. 신랑 검정 구두/양말 지참."},
+ {id:"s6",c:"photo",t:"스튜디오 사진 셀렉 (소울) 10:00",s:"2026-11-21",ms:1,b:"fix",n:"11/21(토) 10:00 소울스튜디오에서 사진 셀렉. 원본을 구매했으므로 셀렉 후 수정 컨펌 2~3회와 수정본 파일 수령 가능. 앨범은 셀렉 후 3~4개월, 앨범 수령 기한은 이날 확인."},
+ {id:"s4",c:"photo",t:"수정 컨펌 (셀렉 후 2~3회)",s:"2026-11-23",e:"2026-12-18",b:"rec",n:"11/21 셀렉 후 진행. 원본 구매 시: 원본 파일 수령, 앨범/액자 셀렉 후 2~3번 수정 컨펌, 수정본 파일(앨범 편집용) 수령. 미구매 시: 앨범과 액자만 수령, 수정 컨펌 불가, 사진 파일 없음. 원본 파일은 촬영 후 최대 1년 보관. 앨범 수령 기한은 아직 미확인."},
+ {id:"s5",c:"photo",t:"수정본 파일 수령 (청첩장/영상용)",s:"2026-12-07",e:"2026-12-31",b:"rec",n:"원본 구매 완료(10-27). 11/21 셀렉과 수정 컨펌이 끝난 뒤 수령, 시기는 추정. 스튜디오 앨범은 셀렉 후 3~4개월, 액자는 예식 주 웨딩홀로 출고."},
+
+ {id:"d1",c:"dress",t:"드레스샵 확정 (인스타 비교)",s:"2026-10-12",e:"2026-10-31",b:"rec",n:"지정샵 루나스포사, 코코드 브라이덜/드벨르 마리에로 변경 가능(추가금 없음). 1곳만 보면 5벌 비교. 투어 시 2곳 10만 원, 3곳 20만 원(샵별 3벌), 지정샵만 본 뒤 재투어 10만 원(3벌)."},
+ {id:"d2",c:"dress",t:"결혼반지 결정 및 주문",s:"2026-10-12",e:"2026-12-31",b:"rec",n:"제작 기간 고려해 연내 주문 권장. 제휴 예물 할인은 결제액 5%, 최대 20만 원이며 금/다이아 제외로 표기됨."},
+ {id:"d3",c:"dress",t:"신혼여행 예약",s:"2026-11-02",e:"2026-12-31",b:"rec",n:"제휴 여행사 계약 시 5만 원 할인(국내여행 제외)."},
+ {id:"d7",c:"dress",t:"본식 드레스 일정 예약 요청",s:"2027-01-04",e:"2027-01-29",b:"rec",n:"늦으면 원하는 일정이 마감될 수 있어 미리 플래너에게 요청. 평일만 가능하니 연차 계획도 함께."},
+ {id:"d4",c:"dress",t:"본식 드레스 셀렉 (평일)",s:"2027-02-16",e:"2027-03-05",b:"fix",n:"예식 1.5~2개월 전, 화~금만 가능(화~목 추천, 금요일은 드레스가 많이 빠짐). 시간 10:30/13:00/14:30/16:00/17:30(금 제외). 턱시도도 같은 날 함께 보고 소매/바지 기장 체크(빼고 개인 준비해도 금액 변동 없음). 업그레이드 시 50~200만 원 드레스샵 별도 결제."},
+ {id:"d5",c:"dress",t:"혼주 한복 준비",s:"2027-01-04",e:"2027-03-13",b:"rec",n:"제휴 한복집 대여 3만, 맞춤 5만 원 할인."},
+ {id:"d6",c:"dress",t:"혼수 선불카드 40만 원 사용",s:"2026-10-12",e:"2027-03-31",b:"rec",n:"사용처와 사용기한 확인 필요(안내지 손글씨 메모)."},
+
+ {id:"r1",c:"ready",t:"본식 비디오 업체 섭외",s:"2026-11-02",e:"2026-12-31",b:"rec",n:"패키지 미포함. 연계 업체 또는 개인 섭외. 본식 사진(스냅/원판)은 세븐스헤븐으로 포함되어 있고, 다른 연계 스냅업체 리스트와 추가금은 플래너에게 요청 가능."},
+ {id:"r2",c:"ready",t:"사회자(지인) 확정",s:"2026-12-01",e:"2027-01-31",b:"rec",n:"당일 예식 30분 전 도착, 동선/음향 리허설."},
+ {id:"r3",c:"ready",t:"축가 여부와 곡 결정",s:"2026-12-01",e:"2027-01-31",b:"rec",n:"1곡이면 2절까지, 2곡이면 1절씩. 스크린 영상 사용 시 축가 1절만. 개인 악기 반입 불가."},
+ {id:"r4",c:"ready",t:"식전/감사 영상 직접 제작 (Claude)",s:"2027-02-01",e:"2027-03-27",b:"rec",n:"필요한 영상은 직접 찍은 사진이나 받은 앨범을 다시 촬영한 사진으로 Claude를 이용해 간단히 제작(10월에 만든 식전 영상 느낌). 웨딩홀 규격: MP4, 1920x1080, 24~30fps, 스테레오 44.1kHz, 화면비 4:3 또는 16:9. 로비 사이니지 모니터 영상은 W웨딩 신규 서비스로 아직 공지 전이며 추후 선택사항(지금은 안 해도 됨)."},
+ {id:"r5",c:"ready",t:"부케 선택 (샘플 1~20번)",s:"2027-03-01",e:"2027-03-31",b:"rec",n:"부토니에와 혼주 코사지는 부케에 맞춰 세트 제작."},
+ {id:"r6",c:"ready",t:"아버님 H/M, 플라워샤워 여부 결정",s:"2027-03-01",e:"2027-04-07",b:"rec",n:"잔금에 반영되므로 최종 체크 방문 전 결정. 플라워샤워(행진 후 축포)는 정가 15만 원, 지금은 이벤트가 10만 원이며 이벤트가 끝날 수 있어 할 생각이면 일찍 플래너에게 요청."},
+ {id:"r9",c:"ready",t:"리허설 H/M 여부 결정 (신부)",s:"2026-10-12",e:"2026-10-23",b:"rec",n:"지명 포함 22만 원, 신부만(신랑 미포함). 아뮤르 인스타에서 코디쌤 확인 후 일정과 코디쌤을 플래너에게 요청. 촬영 당일 헤메는 스튜디오 자체에서 기본 진행하므로, 22만 원은 아뮤르 코디쌤을 지명하는 선택 옵션으로 보임(확답 전, 플래너에게 확인)."},
+ {id:"r7",c:"ready",t:"식순 협의 (주례 없는 예식)",s:"2027-03-15",e:"2027-04-08",b:"rec",n:"사전 협의 필수. 당일 늦어지면 남은 식순이 빠질 수 있음."},
+ {id:"r8",c:"ready",t:"축가 MR(MP3)과 영상 제출",s:"2027-03-29",e:"2027-04-08",b:"rec",n:"k_weddinghall@naver.com, 안내받은 기한 내. 제출 후 어떤 이유로도 변경 불가."},
+
+ {id:"g1",c:"guest",t:"하객 명단 초안 (양가)",s:"2026-11-02",e:"2027-01-29",b:"rec",n:"보증인원 판단의 기초 자료."},
+ {id:"g2",c:"guest",t:"종이/모바일 청첩장 제작",s:"2026-12-07",e:"2027-02-06",b:"rec",n:"교대역 5번 출구/지하 연결통로 안내, SUV는 타워주차 불가라 외부 주차장 이용 문구 권장. 하객 무료 주차는 2시간까지만(연장 불가)."},
+ {id:"g3",c:"guest",t:"청첩장 발송",s:"2027-02-15",e:"2027-03-13",b:"rec",n:"예식 5~9주 전 구간."},
+ {id:"g4",c:"guest",t:"참석 인원 집계, 양가 협의",s:"2027-03-01",e:"2027-03-31",b:"rec",n:"예상 200명이면 보증 150명, 250명이면 180~200명이 플래너 권장."},
+ {id:"g5",c:"guest",t:"감사장 준비",s:"2027-03-15",e:"2027-04-10",b:"rec",n:"감사장은 결혼식이 끝난 뒤 와 주신 하객분들과, 오지 못했지만 축의금이나 축하를 보내주신 분들께 고마움을 전하는 인사장. 요즘은 예식 사진을 넣은 모바일 감사장(카톡 링크나 이미지)을 많이 씀. 웨딩홀 계약서상 개인 준비 항목이며, 보통 예식 후 1~2주 안에 보냄."},
+
+ {id:"b1",c:"buffet",t:"시식 (김현, 인하, 이재원, 이소현)",s:"2027-03-20",e:"2027-03-28",b:"rec",n:"참석 잠정: 김현, 인하, 이재원(소개해 준 친구), 이소현(재원 아내). 예식 한 달 전(3/18)부터 가능, 주말 첫 예식 시간으로만 예약. 안내 연락 후 예약, 하루 6팀 선착순, 4인이 반드시 함께 방문(나눠서 불가). 웨딩홀 안내가 오면 재원/소현 부부와 가능한 주말을 바로 맞춰 예약. 보증인원 확정(4/3) 전에 다녀오는 것을 권장."},
+ {id:"b4",c:"buffet",t:"감사 선물 상품권 50만 원 준비",s:"2027-03-02",e:"2027-03-19",b:"rec",n:"시식 자리에서 재원/소현 부부께 전달(어른들과 협의 완료). 가장 빠른 시식 후보일(3/20) 전날까지 준비. 상품권 종류 정하기, 백화점 상품권은 신용카드 구매가 제한되는 경우가 많아 현금이나 체크카드 준비, 봉투와 손편지/카드 함께 준비."},
+ {id:"b2",c:"buffet",t:"보증인원 확정, 식권 양가 배분",s:"2027-04-03",ms:1,b:"fix",n:"예식 15일 전까지. 최소 150명, 160명 이상이면 당일 소량 추가 가능. 여유식권 30장 포함해 신랑측/신부측 배분."},
+ {id:"b3",c:"buffet",t:"식권 수령, 도장/사인 표시",s:"2027-04-03",e:"2027-04-10",b:"rec",n:"4층 상담실 예약 후 수령. 도장 또는 서명 없으면 사용 불가, 스티커 불가."},
+
+ {id:"w1",c:"week",t:"차량번호 3대, 원판 가족 명단 전달",s:"2027-04-01",e:"2027-04-08",b:"fix",n:"웨딩카 1대 + 양가 혼주 1대씩, 지상 1층 지정주차. 번호 틀리면 주차 불가. 원판 대상은 형제자매/배우자/자녀."},
+ {id:"w2",c:"week",t:"접수대 담당자 교육, 가족 11시 집합 공지",s:"2027-04-10",e:"2027-04-16",b:"rec",n:"봉투 즉시 확인(빈 봉투/위조지폐), 가방 자리 비우지 않기, 화환 사진 촬영, 식권 추가는 4층 상담실 가족 직접 방문. 하객 주차는 2시간만 무료(연장 불가) 안내."},
+ {id:"w3",c:"week",t:"헤어메이크업 시간 안내 받기",s:"2027-04-14",e:"2027-04-16",b:"fix",n:"예식 2~4일 전 샵에서 연락. 신랑신부는 국민연금웨딩홀 3층 아뮤르샵, 혼주는 K웨딩홀 4층."},
+ {id:"w4",c:"week",t:"당일 준비물 챙기기",s:"2027-04-13",e:"2027-04-17",b:"rec",n:"갈아입을 예복(스타킹, 구두, 넥타이, 벨트), 신랑 검정 구두/양말, 흰 봉투 여유분, 튼튼한 축의금 가방, 커플링만 착용."},
+ {id:"j1",c:"home",t:"임대차 신고 (계약 30일 내)",s:"2026-10-26",e:"2026-11-24",b:"fix",n:"계약서 작성일 10-25 기준 30일 내 신고 의무(보증금 6천만 초과). 부동산거래관리시스템(RTMS) 온라인 또는 주민센터. 임차인 혼자 서명된 계약서를 내도 공동신고로 인정. 늦으면 과태료 2~30만 원."},
+ {id:"j5",c:"home",t:"확정일자 받기",s:"2026-10-26",e:"2026-11-24",b:"fix",n:"계약서에 날짜 도장을 받아 우선변제권의 근거를 만듦. 임대차 신고 때 계약서를 첨부하면 자동 부여되므로 신고와 같이 끝낼 수 있음. 따로 받으려면 주민센터(600원) 또는 인터넷등기소(500원). 입주 전에 받아 두어도 됨."},
+ {id:"j2",c:"home",t:"전셋집 잔금 1억 2,150만 송금 + 입주",s:"2027-01-31",ms:1,big:1,b:"fix",n:"계약서상 잔금일 2027-01-31(일). 보증금 1억 3,500만 중 납부 1,350만(가계약금 100만 + 계약서 작성 시 1,250만) 차감. 송금 직전 등기부등본을 다시 떼서 근저당 등 변동 확인 후 송금."},
+ {id:"j3",c:"home",t:"전입신고 (입주 당일, 늦어도 14일 내)",s:"2027-01-31",e:"2027-02-13",b:"rec",n:"대항력은 입주 + 전입신고 다음날 0시부터 생기므로 입주 당일 바로. 주민센터 또는 정부24. 확정일자를 아직 안 받았으면 계약서 들고 가서 같이."},
+ {id:"j4",c:"home",t:"전세보증금반환보증 신청 (HUG)",s:"2027-02-01",e:"2027-03-31",b:"rec",n:"잔금일과 전입신고일 중 늦은 날부터 계약기간 절반 전까지 신청 가능. 전입신고 + 확정일자 + 확정일자부 계약서, 보증금 이체 내역, 주민등록등본, 신분증. HUG 인터넷/모바일보증, 위탁 은행, 네이버/카카오 앱."},
+ {id:"w5",c:"week",t:"결혼식",s:"2027-04-18",ms:1,big:1,b:"fix",n:"11:00 대기실/가족 원판, 11:30 접수대와 사회자/축가 도착, 12:00 예식, 12:20 접수대 종료, 14:00 식사 종료."}
+];
+T.forEach(x=>{if(!x.e)x.e=x.s});
+
+const pd=s=>{const[a,b,c]=s.split("-").map(Number);return new Date(a,b-1,c)};
+const DAY=864e5;
+const diff=(a,b)=>Math.round((b-a)/DAY);
+const fmt=s=>{const d=pd(s);return `${d.getMonth()+1}/${d.getDate()}(${"일월화수목금토"[d.getDay()]})`};
+const range=x=>x.s===x.e?fmt(x.s):`${fmt(x.s)} ~ ${fmt(x.e)}`;
+const col=c=>`var(${CATS[c].v})`;
+const WED=pd("2027-04-18");
+const now=new Date(); const TODAY=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+
+// state
+let done={};
+try{done=JSON.parse(localStorage.getItem("wed-ms-done")||"{}")||{}}catch(e){done={}}
+T.forEach(x=>{if(x.done&&done[x.id]===undefined)done[x.id]=true});
+const save=()=>{try{localStorage.setItem("wed-ms-done",JSON.stringify(done))}catch(e){}};
+function toggle(id,v){done[id]=v;save();syncLink(id);renderAll(false)}
+
+// header
+function renderHead(){
+  const d=diff(TODAY,WED);
+  document.getElementById("dday").textContent=d>0?`D-${d}`:d===0?"D-DAY":`D+${-d}`;
+  document.getElementById("ddayLbl").textContent=`오늘 ${TODAY.getMonth()+1}월 ${TODAY.getDate()}일 기준`;
+  const n=T.filter(x=>done[x.id]).length;
+  document.getElementById("progTxt").textContent=`완료 ${n} / ${T.length}`;
+  document.getElementById("progBar").style.width=(n/T.length*100)+"%";
+  document.getElementById("legend").innerHTML=Object.entries(CATS).map(([k,c])=>`<span><i class="sw" style="background:var(${c.v})"></i>${c.n}</span>`).join("")
+   +`<span><i class="sw fix"></i>계약서 기한</span><span><i class="sw rec"></i>권장 일정</span><span><i class="sw ms"></i>마일스톤</span>`;
+}
+
+// detail
+const det=document.getElementById("detail");
+let lastDet=null;
+function showDetail(items,title){
+  lastDet={items,title};
+  det.classList.add("on");
+  det.innerHTML=(title?`<h3>${title}</h3>`:"")+items.map(x=>`
+    <div style="margin:${title?'10px':'0'} 0 0">
+      <h3 style="font-size:${title?'16px':'18px'};color:${col(x.c)}">${x.t}</h3>
+      <div class="meta">${range(x)}<span class="tag">${x.b==="fix"?"계약서 기한":"권장 일정"}</span><span class="tag">${CATS[x.c].n}</span>${done[x.id]?'<span class="tag">완료</span>':''}</div>
+      <p>${x.n||""}</p>${vchips(x.id)}
+    </div>`).join("")||"<p>이 날짜에 잡힌 일정이 없습니다.</p>";
+}
+
+// Gantt
+const GS=pd("2026-10-05"),GE=pd("2027-04-25");
+function renderGantt(){
+  const DW=window.innerWidth<640?3.2:4.2;
+  const days=diff(GS,GE)+1, W=Math.round(days*DW);
+  const g=document.getElementById("gantt");
+  let h=`<div class="grow ghead"><div class="glbl">할 일</div><div class="track" style="width:${W}px">`;
+  let m=new Date(GS.getFullYear(),GS.getMonth(),1); const mlines=[];
+  while(m<=GE){
+    const st=m<GS?GS:m; const nx=new Date(m.getFullYear(),m.getMonth()+1,1); const en=nx>GE?new Date(GE.getTime()+DAY):nx;
+    const l=diff(GS,st)*DW, w=diff(st,en)*DW;
+    h+=`<div class="month" style="left:${l}px;width:${w}px">${m.getMonth()===0||m===GS?m.getFullYear()+". ":""}${m.getMonth()+1}월</div>`;
+    if(m>=GS)mlines.push(l); m=nx;
+  }
+  h+=`</div></div>`;
+  Object.keys(CATS).forEach(c=>{
+    h+=`<div class="grow ggroup"><div class="glbl">${CATS[c].n}</div><div class="track" style="width:${W}px"></div></div>`;
+    T.filter(x=>x.c===c).forEach(x=>{
+      const l=diff(GS,pd(x.s))*DW, w=Math.max((diff(pd(x.s),pd(x.e))+1)*DW,6);
+      const shape=x.ms?`<div class="gms${x.big?' big':''}" data-id="${x.id}" style="--c:${col(c)};left:${l+DW/2-(x.big?8:6)}px" title="${x.t}"></div>`
+        :`<div class="gbar ${x.b}" data-id="${x.id}" style="--c:${col(c)};left:${l}px;width:${w}px" title="${x.t}"></div>`;
+      h+=`<div class="grow ${done[x.id]?'isdone':''}"><div class="glbl"><input type="checkbox" data-ck="${x.id}" ${done[x.id]?'checked':''} aria-label="${x.t} 완료"><span class="t" data-id="${x.id}" title="${x.t}">${x.t}</span></div><div class="track" style="width:${W}px">${shape}</div></div>`;
+    });
+  });
+  const lw=window.innerWidth<640?150:210;
+  let ov=`<div class="overlay" style="left:${lw}px;width:${W}px">`+mlines.map(l=>`<div class="mline" style="left:${l}px"></div>`).join("");
+  if(TODAY>=GS&&TODAY<=GE)ov+=`<div class="tline" style="left:${diff(GS,TODAY)*DW+DW/2}px"><b>오늘</b></div>`;
+  ov+=`<div class="dline" style="left:${diff(GS,WED)*DW+DW/2}px"></div></div>`;
+  g.innerHTML=h+ov;
+}
+
+// Calendar
+const MONTHS=[];{let m=new Date(2026,9,1);while(m<=new Date(2027,3,1)){MONTHS.push(new Date(m));m=new Date(m.getFullYear(),m.getMonth()+1,1)}}
+let mi=Math.max(0,MONTHS.findIndex(m=>m.getFullYear()===TODAY.getFullYear()&&m.getMonth()===TODAY.getMonth()));
+let selDay=null;
+function renderCal(){
+  const m=MONTHS[mi], y=m.getFullYear(), mo=m.getMonth();
+  document.getElementById("calTitle").textContent=`${y}년 ${mo+1}월`;
+  document.getElementById("prev").disabled=mi===0;
+  document.getElementById("next").disabled=mi===MONTHS.length-1;
+  let h="일월화수목금토".split("").map((d,i)=>`<div class="dow ${i===0?'sun':i===6?'sat':''}">${d}</div>`).join("");
+  const first=new Date(y,mo,1), last=new Date(y,mo+1,0);
+  for(let i=0;i<first.getDay();i++)h+=`<div class="cell out"></div>`;
+  for(let d=1;d<=last.getDate();d++){
+    const dt=new Date(y,mo,d), dow=dt.getDay();
+    const pts=T.filter(x=>(x.ms||x.s===x.e)&&pd(x.s).getTime()===dt.getTime());
+    const rng=T.filter(x=>!x.ms&&x.s!==x.e&&pd(x.s)<=dt&&pd(x.e)>=dt);
+    const cats=[...new Set(rng.map(x=>x.c))];
+    const key=`${y}-${mo+1}-${d}`;
+    h+=`<div class="cell ${dow===0?'sun':dow===6?'sat':''} ${dt.getTime()===TODAY.getTime()?'today':''} ${dt.getTime()===WED.getTime()?'wedding':''} ${selDay===key?'sel':''}" tabindex="0" data-day="${key}">
+      <span class="dn">${d}</span>
+      ${pts.map(x=>`<span class="chip ${done[x.id]?'done':''}" style="--c:${col(x.c)}">${x.t}</span>`).join("")}
+      ${rng.filter(x=>pd(x.s).getTime()===dt.getTime()||pd(x.e).getTime()===dt.getTime()).slice(0,2).map(x=>`<span class="chip ${done[x.id]?'done':''}" style="--c:${col(x.c)};opacity:.75">${pd(x.s).getTime()===dt.getTime()?'시작 ':'마감 '}${x.t}</span>`).join("")}
+      <span class="dots">${cats.map(c=>`<i style="--c:${col(c)}"></i>`).join("")}</span>
+    </div>`;
+  }
+  const tail=(7-((first.getDay()+last.getDate())%7))%7;
+  for(let i=0;i<tail;i++)h+=`<div class="cell out"></div>`;
+  document.getElementById("cal").innerHTML=h;
+
+  const items=T.filter(x=>pd(x.s)<=last&&pd(x.e)>=first).sort((a,b)=>pd(a.s)-pd(b.s));
+  document.getElementById("mlist").innerHTML=`<h3>${mo+1}월에 걸친 일정 ${items.length}건</h3>`+items.map(x=>`
+    <div class="mi ${done[x.id]?'isdone':''}"><input type="checkbox" data-ck="${x.id}" ${done[x.id]?'checked':''} aria-label="${x.t} 완료">
+      <span class="tt" data-id="${x.id}" style="--c:${col(x.c)}">${x.t}</span>
+      <span class="dd">${range(x)} / ${x.b==="fix"?"계약서 기한":"권장 일정"}</span></div>`).join("");
+}
+
+function renderAll(keepDetail){renderHead();renderGantt();renderCal();renderBudget();}
+
+document.addEventListener("change",e=>{const id=e.target.dataset&&e.target.dataset.ck;if(id)toggle(id,e.target.checked)});
+document.addEventListener("click",e=>{
+  const el=e.target.closest("[data-id]");
+  if(el&&!e.target.matches("input")){const x=T.find(t=>t.id===el.dataset.id);if(x){showDetail([x]);det.scrollIntoView({behavior:"smooth",block:"nearest"})}return}
+  const c=e.target.closest(".cell[data-day]");
+  if(c)pickDay(c.dataset.day);
+});
+document.addEventListener("keydown",e=>{const c=e.target.closest&&e.target.closest(".cell[data-day]");if(c&&(e.key==="Enter"||e.key===" ")){e.preventDefault();pickDay(c.dataset.day)}});
+function pickDay(key){
+  selDay=key;const[y,m,d]=key.split("-").map(Number);const dt=new Date(y,m-1,d);
+  const its=T.filter(x=>pd(x.s)<=dt&&pd(x.e)>=dt);
+  renderCal();showDetail(its,`${m}월 ${d}일(${"일월화수목금토"[dt.getDay()]})`);
+  if(!its.length)det.innerHTML+=`<p style="margin-top:6px">이 날짜에 잡힌 일정이 없습니다.</p>`;
+}
+document.getElementById("prev").onclick=()=>{if(mi>0){mi--;renderCal()}};
+document.getElementById("next").onclick=()=>{if(mi<MONTHS.length-1){mi++;renderCal()}};
+document.querySelectorAll(".tabs button").forEach(b=>b.onclick=()=>{
+  document.querySelectorAll(".tabs button").forEach(x=>x.setAttribute("aria-selected",x===b));
+  ["gantt","cal","budget"].forEach(v=>document.getElementById("view-"+v).hidden=b.dataset.view!==v);
+  document.getElementById("legend").hidden=b.dataset.view==="budget";
+  if(b.dataset.view==="budget")det.classList.remove("on");
+});
+// ---------- Budget ----------
+const BI=[
+ {id:"m1",t:"웨딩홀 계약금",a:35,d:"2026-10-09",w:"웨딩홀 / 이체",k:"fix",paid:1},
+ {id:"m2",t:"뷔페 계약금",a:85,d:"2026-10-09",w:"24층 뷔페 (당일 총액에서 차감) / 이체. 인하 정리표 기준 85만",k:"fix",paid:1},
+ {id:"m3",t:"스드메 중도금",a:150,d:"2026-10-25",w:"웨딩홀 상담실 방문 / 카드",k:"fix",link:"p2"},
+ {id:"m4",t:"스튜디오 촬영 헬퍼비",a:11,d:"2026-10-27",w:"스튜디오 현장 / 카드",k:"fix",paid:1},
+ {id:"m5",t:"스튜디오 사진 원본 구매",a:33,d:"2026-10-27",w:"스튜디오 현장 / 카드",k:"fix",paid:1},
+ {id:"m6",t:"스튜디오 촬영드레스 추가금",a:38.5,d:"2026-10-27",w:"스튜디오 현장 / 메리스 드레스 16.5만 + 첫 드레스 22만 (결제수단 미기재)",k:"fix",paid:1},
+ {id:"m7",t:"루미디아 사전 피팅",a:5,d:"2026-10-26",w:"루미디아 (방문 1회, 추가금 드레스 별도)",k:"opt",inc:0},
+ {id:"m8",t:"드레스 투어",a:10,d:"2026-10-31",w:"드레스샵 (2곳 10, 3곳 20)",k:"opt",inc:0},
+ {id:"m9",t:"본식 드레스 업그레이드",a:50,d:"2027-02-27",w:"드레스샵 (50~200)",k:"opt",inc:0},
+ {id:"m10",t:"감사 선물 상품권",a:50,d:"2027-03-19",w:"재원/소현 부부",k:"fix",link:"b4"},
+ {id:"m11",t:"웨딩홀 잔금",a:170,d:"2027-04-08",w:"웨딩홀 4층",k:"fix",link:"p4"},
+ {id:"m12",t:"아버님 헤어메이크업 2인",a:10,d:"2027-04-08",w:"잔금 합산",k:"opt",inc:1},
+ {id:"m13",t:"축포형 플라워샤워",a:10,d:"2027-04-08",w:"잔금 합산 (정가 15, 이벤트가 10)",k:"opt",inc:1},
+ {id:"m14",t:"뷔페 식사비 150명 (계약금 차감)",a:700,d:"2027-04-18",w:"24층 뷔페 카운터",k:"fix"},
+ {id:"m15",t:"여유식권 사용분 (15장 가정)",a:75,d:"2027-04-18",w:"24층 뷔페 카운터",k:"opt",inc:1},
+ {id:"m16",t:"소인 식사 (10명 가정)",a:25,d:"2027-04-18",w:"24층 뷔페 카운터",k:"opt",inc:1},
+ {id:"m30",t:"리허설 H/M (신부, 지명 포함)",a:22,d:"2026-10-27",w:"아뮤르 코디쌤 지명 옵션 (확인 필요)",k:"opt",inc:0},
+ {id:"m20",t:"촬영용 한복 대여 (한복 선택 시)",a:null,d:"2026-10-26",w:"한복집",k:"tbd"},
+ {id:"m21",t:"결혼반지",a:null,d:"2026-12-31",w:"예물샵",k:"tbd"},
+ {id:"m22",t:"신혼여행",a:null,d:"2026-12-31",w:"여행사",k:"tbd"},
+ {id:"m23",t:"본식 비디오",a:null,d:"2026-12-31",w:"영상 업체",k:"tbd"},
+ {id:"m24",t:"종이/모바일 청첩장",a:null,d:"2027-02-06",w:"청첩장 업체",k:"tbd"},
+ {id:"m25",t:"혼주 한복",a:null,d:"2027-03-13",w:"한복집",k:"tbd"},
+ {id:"m26",t:"식전/감사 영상 (직접 제작)",a:0,d:"2027-03-27",w:"Claude로 직접 제작",k:"tbd"},
+ {id:"m27",t:"감사장",a:null,d:"2027-04-10",w:"예식 후 하객과 축하해 주신 분께 보내는 감사 인사장 (종이 또는 모바일, 계약서상 개인 준비)",k:"tbd"},
+ {id:"m28",t:"예식 후 갈아입을 옷",a:null,d:"2027-04-10",w:"",k:"tbd"},
+ {id:"m29",t:"사회자/축가 사례",a:null,d:"2027-04-18",w:"",k:"tbd"},
+ {id:"h1",t:"전셋집 가계약금",a:100,d:"2026-10-19",w:"집주인 계좌 이체",k:"home",dep:1,paid:1},
+ {id:"h2",t:"전셋집 계약금 (계약서 작성 시)",a:1250,d:"2026-10-25",w:"부동산에서 계약서 작성 후 이체 (1,000만 + 250만 두 번 입금)",k:"home",dep:1,paid:1},
+ {id:"h3",t:"부동산 중개비",a:42,d:"2026-10-25",w:"부동산 소장 계좌 이체",k:"home",paid:1},
+ {id:"h4",t:"전셋집 잔금",a:12150,d:"2027-01-31",w:"계약서상 잔금일 2027-01-31. 보증금 1억 3,500만 - 납부 1,350만",k:"home",dep:1,link:"j2"},
+ {id:"h5",t:"전세보증보험 보증료 (HUG)",a:null,d:"2027-02-28",w:"잔금/전입 후 신청, 보증료는 HUG 요율표로 확인",k:"home"}
+];
+let BS={o:{},c:[]};
+try{const r=JSON.parse(localStorage.getItem("wed-budget-v1")||"null");if(r&&r.o)BS={o:r.o,c:Array.isArray(r.c)?r.c:[]}}catch(e){}
+const bsave=()=>{try{localStorage.setItem("wed-budget-v1",JSON.stringify(BS))}catch(e){}};
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const todayStr=()=>`${TODAY.getFullYear()}-${String(TODAY.getMonth()+1).padStart(2,"0")}-${String(TODAY.getDate()).padStart(2,"0")}`;
+const allB=()=>BI.concat(BS.c);
+const ovB=x=>BS.o[x.id]||{};
+const bAmt=x=>{const o=ovB(x);return o.a!==undefined?o.a:x.a};
+const bInc=x=>x.k!=="opt"||(ovB(x).i!==undefined?ovB(x).i:!!x.inc);
+const bPaid=x=>{const o=ovB(x);if(o.p!==undefined)return o.p;if(x.link)return !!done[x.link];return !!x.paid};
+const bPd=x=>ovB(x).pd||x.d;
+const won=n=>`${(Math.round(n*10)/10).toLocaleString("ko-KR")}만 원`;
+const eok=n=>n>=10000?`${Math.floor(n/10000)}억${n%10000?" "+won(n%10000):" 원"}`:won(n);
+const setO=(id,k,v)=>{BS.o[id]=Object.assign({},BS.o[id],{[k]:v})};
+function syncLink(tid){BI.filter(x=>x.link===tid).forEach(x=>{if(BS.o[x.id])delete BS.o[x.id].p});bsave()}
+function bRow(x,isPaid){
+  const a=bAmt(x), off=x.k==="opt"&&!bInc(x)&&!isPaid;
+  const kind=x.custom?"직접 추가":{fix:"확정",opt:"선택",tbd:"견적",home:"전세"}[x.k];
+  return `<div class="brow ${off?'off':''}">
+    <div><div class="bt">${esc(x.t)}<span class="kind">${kind}</span></div>
+      <div class="bm">${isPaid?'지불 '+fmt(bPd(x)):fmt(x.d)+' 예정'}${x.w?' / '+esc(x.w):''}</div></div>
+    <label class="amt"><input type="number" min="0" step="1" inputmode="numeric" data-bamt="${x.id}" value="${a==null?'':a}" placeholder="견적 전" aria-label="${esc(x.t)} 금액">만 원</label>
+    <div class="bacts">${x.k==="opt"&&!isPaid?`<label class="binc"><input type="checkbox" data-binc="${x.id}" ${bInc(x)?'checked':''}>예산 포함</label>`:''}${x.custom?`<button class="bbtn" data-bdel="${x.id}">삭제</button>`:''}<button class="bbtn ${isPaid?'':'pay'}" data-bpay="${x.id}" data-v="${isPaid?0:1}">${isPaid?'되돌리기':'지불 완료'}</button></div>
+  </div>`;
+}
+function renderBudget(){
+  const items=allB().filter(x=>x.k!=="home").sort((a,b)=>pd(a.d)-pd(b.d));
+  const paidI=items.filter(bPaid).sort((a,b)=>pd(bPd(a))-pd(bPd(b))), due=items.filter(x=>!bPaid(x));
+  const sum=a=>a.reduce((s,x)=>s+(Number(bAmt(x))||0),0);
+  const paidSum=sum(paidI), dueFix=sum(due.filter(x=>x.k==="fix")), dueOpt=sum(due.filter(x=>x.k==="opt"&&bInc(x))), dueTbd=sum(due.filter(x=>x.k==="tbd"));
+  const tbdN=due.filter(x=>x.k==="tbd"&&bAmt(x)==null).length;
+  const dueAll=dueFix+dueOpt+dueTbd, total=paidSum+dueAll, pct=v=>total?v/total*100:0;
+  const nx=due.filter(x=>x.k==="fix"||(x.k==="opt"&&bInc(x))||(x.k==="tbd"&&bAmt(x)!=null))[0];
+  document.getElementById("bSum").innerHTML=`
+    <div class="stack" role="img" aria-label="지불 완료 ${Math.round(pct(paidSum))}%">
+      <i style="width:${pct(paidSum)}%;background:var(--c-ready)"></i>
+      <i style="width:${pct(dueFix)}%;background:var(--c-pay)"></i>
+      <i style="width:${pct(dueOpt+dueTbd)}%;background:repeating-linear-gradient(135deg,var(--c-dress) 0 4px,transparent 4px 8px)"></i>
+    </div>
+    <div class="figs">
+      <div class="fig"><div class="k"><i class="sw" style="background:var(--c-ready)"></i>지불 완료</div><div class="v">${won(paidSum)}</div><div class="s">${paidI.length}건</div></div>
+      <div class="fig"><div class="k"><i class="sw" style="background:var(--c-pay)"></i>앞으로 지불</div><div class="v">${won(dueAll)}</div><div class="s">확정 ${won(dueFix)} / 선택과 견적 ${won(dueOpt+dueTbd)}</div></div>
+      <div class="fig"><div class="k"><i class="sw rec"></i>예산 합계</div><div class="v">${won(total)}</div><div class="s">${tbdN?`견적 전 ${tbdN}건은 빠져 있음`:'모든 항목 반영'}</div></div>
+      <div class="fig"><div class="k"><i class="sw" style="background:var(--c-buffet)"></i>최대 예산 3,000만 원</div><div class="v">${total<=BUDGET_MAX?'여유 '+won(BUDGET_MAX-total):'초과 '+won(total-BUDGET_MAX)}</div><div class="s">예식, 신혼여행, 예물 포함. 신혼집 전세는 별도</div></div>
+    </div>
+    ${nx?`<p class="next">다음 지불: <b>${fmt(nx.d)} ${esc(nx.t)} ${won(bAmt(nx))}</b> (D-${Math.max(0,diff(TODAY,pd(nx.d)))})</p>`:''}`;
+  const groups={};due.forEach(x=>{const d=pd(x.d);const k=`${d.getFullYear()}-${d.getMonth()+1}`;(groups[k]=groups[k]||[]).push(x)});
+  let h=`<h3>앞으로 지불 <small>${won(dueAll)}</small></h3><p class="bnote">금액을 고치면 합계에 바로 반영됩니다. 선택 항목은 예산 포함을 끄면 합계에서 빠집니다.</p>`;
+  Object.keys(groups).forEach(k=>{const [y,m]=k.split("-");const g=groups[k];
+    const s=sum(g.filter(x=>x.k!=="opt"||bInc(x)));
+    h+=`<div class="bmon"><span>${y}년 ${m}월</span><span>${won(s)}</span></div>`+g.map(x=>bRow(x,false)).join("")});
+  if(!due.length)h+=`<p class="bnote">남은 지불이 없습니다.</p>`;
+  document.getElementById("bDue").innerHTML=h;
+  document.getElementById("bPaid").innerHTML=`<h3>지불 완료 <small>${won(paidSum)}</small></h3>`+(paidI.length?paidI.map(x=>bRow(x,true)).join(""):`<p class="bnote">아직 지불한 항목이 없습니다.</p>`);
+  const home=allB().filter(x=>x.k==="home").sort((a,b)=>pd(a.d)-pd(b.d));
+  const hp=home.filter(bPaid), hd=home.filter(x=>!bPaid(x));
+  const hPaid=sum(hp), depPaid=sum(hp.filter(x=>x.dep)), depLeft=Math.max(0,JEONSE-depPaid);
+  document.getElementById("bHome").innerHTML=`<h3>신혼집 전세 (결혼 예산 3,000만 원과 별도) <small>납부 ${won(hPaid)}</small></h3><p class="bnote">보증금 ${eok(JEONSE)} 중 ${won(depPaid)} 납부, 남은 잔금 ${eok(depLeft)}. 중개비 등은 보증금과 별도로 더함.</p>`+hp.map(x=>bRow(x,true)).join("")+hd.map(x=>bRow(x,false)).join("");
+}
+const BUDGET_MAX=3000, JEONSE=13500;
+document.addEventListener("change",e=>{
+  const t=e.target;
+  if(t.dataset&&t.dataset.bamt){setO(t.dataset.bamt,"a",t.value===""?null:Math.max(0,Number(t.value)));bsave();renderBudget()}
+  else if(t.dataset&&t.dataset.binc){setO(t.dataset.binc,"i",t.checked);bsave();renderBudget()}
+});
+document.addEventListener("click",e=>{
+  const p=e.target.closest("[data-bpay]");
+  if(p){const id=p.dataset.bpay,v=p.dataset.v==="1";const x=allB().find(i=>i.id===id);setO(id,"p",v);if(v)setO(id,"pd",todayStr());if(x&&x.link){done[x.link]=v;save()}bsave();renderAll();return}
+  const dl=e.target.closest("[data-bdel]");
+  if(dl){BS.c=BS.c.filter(i=>i.id!==dl.dataset.bdel);delete BS.o[dl.dataset.bdel];bsave();renderBudget()}
+});
+document.getElementById("nAdd").onclick=()=>{
+  const tEl=document.getElementById("nT"),aEl=document.getElementById("nA"),dEl=document.getElementById("nD");
+  const t=tEl.value.trim();if(!t){tEl.focus();return}
+  BS.c.push({id:"c"+Date.now(),t,a:aEl.value===""?null:Math.max(0,Number(aEl.value)),d:dEl.value||todayStr(),w:"",k:"tbd",custom:1});
+  bsave();tEl.value="";aEl.value="";dEl.value="";renderBudget();
+};
+
+// ---------- Excel export (가계부) ----------
+const XLSX_URL="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js";
+let xlLib=null, dlNs=null;
+function loadXLSX(){
+  if(window.XLSX)return Promise.resolve(window.XLSX);
+  if(xlLib)return xlLib;
+  xlLib=new Promise((res,rej)=>{const s=document.createElement("script");s.src=XLSX_URL;
+    s.onload=()=>window.XLSX?res(window.XLSX):rej(new Error("load"));
+    s.onerror=()=>{xlLib=null;rej(new Error("load"))};document.head.appendChild(s)});
+  return xlLib;
+}
+const serial=s=>{const[a,b,c]=s.split("-").map(Number);return (Date.UTC(a,b-1,c)-Date.UTC(1899,11,30))/DAY};
+const CATMAP={m1:"웨딩홀",m2:"뷔페",m3:"웨딩홀",m4:"촬영/영상",m5:"촬영/영상",m6:"드레스",m7:"드레스",m8:"드레스",m9:"드레스",
+  m10:"선물/사례",m11:"웨딩홀",m12:"웨딩홀",m13:"웨딩홀",m14:"뷔페",m15:"뷔페",m16:"뷔페",m20:"한복/예복",m21:"예물",
+  m22:"신혼여행",m23:"촬영/영상",m24:"청첩장",m25:"한복/예복",m26:"촬영/영상",m27:"청첩장",m28:"한복/예복",m29:"선물/사례"};
+const CAT_ORDER=["웨딩홀","뷔페","촬영/영상","드레스","예물","한복/예복","신혼여행","청첩장","선물/사례","기타"];
+
+function buildWorkbook(X){
+  const FN="맑은 고딕", LN={style:"thin",color:{rgb:"D9DEE6"}}, BOR={top:LN,bottom:LN,left:LN,right:LN};
+  const base={font:{name:FN,sz:10,color:{rgb:"1F2A44"}},alignment:{vertical:"center"},border:BOR};
+  const mk=(o)=>({font:Object.assign({},base.font,o.font||{}),alignment:Object.assign({},base.alignment,o.alignment||{}),
+    border:o.noBorder?{}:BOR,fill:o.fill?{patternType:"solid",fgColor:{rgb:o.fill}}:undefined,numFmt:o.numFmt});
+  const S={
+    head:mk({font:{bold:true,color:{rgb:"FFFFFF"}},fill:"1F2A44",alignment:{horizontal:"center",wrapText:true}}),
+    txt:mk({}), ctr:mk({alignment:{horizontal:"center"}}), date:mk({alignment:{horizontal:"center"},numFmt:"yyyy-mm-dd"}),
+    won:mk({numFmt:"#,##0"}), wonIn:mk({numFmt:"#,##0",font:{color:{rgb:"1F6FB2"}}}),
+    wonOut:mk({numFmt:"#,##0",font:{bold:true}}), wonPlan:mk({numFmt:"#,##0",font:{color:{rgb:"7A4E91"}}}),
+    wonCum:mk({numFmt:"#,##0",fill:"F3F5F8"}), wonLeft:mk({numFmt:"#,##0",fill:"EAF4EE",font:{bold:true,color:{rgb:"2E6B4B"}}}),
+    pct:mk({numFmt:"0.0%",alignment:{horizontal:"right"}}),
+    stDone:mk({alignment:{horizontal:"center"},fill:"E3F1E8",font:{bold:true,color:{rgb:"2E6B4B"}}}),
+    stPlan:mk({alignment:{horizontal:"center"},fill:"F1E8F5",font:{color:{rgb:"7A4E91"}}}),
+    stTbd:mk({alignment:{horizontal:"center"},fill:"FBF0E1",font:{color:{rgb:"8A6D3B"}}}),
+    totL:mk({fill:"E9ECF2",font:{bold:true},alignment:{horizontal:"center"}}),
+    totW:mk({fill:"E9ECF2",font:{bold:true},numFmt:"#,##0"}),
+    title:mk({noBorder:true,font:{sz:16,bold:true}}), sub:mk({noBorder:true,font:{sz:10,color:{rgb:"667085"}}}),
+    lab:mk({fill:"F3F5F8",font:{bold:true}}), input:mk({fill:"FFF4D6",numFmt:"#,##0",font:{bold:true}}),
+    big:mk({numFmt:"#,##0",font:{bold:true,sz:11}}), cnt:mk({numFmt:"0\"건\"",alignment:{horizontal:"right"}}),
+    note:mk({noBorder:true,font:{sz:9,color:{rgb:"667085"}},alignment:{wrapText:false}}),
+  };
+  const enc=(r,c)=>X.utils.encode_cell({r,c});
+  const put=(ws,r,c,v,s)=>{let cell;
+    if(v&&typeof v==="object"&&"f" in v)cell={t:"n",f:v.f,v:v.v||0};
+    else if(typeof v==="number")cell={t:"n",v};
+    else cell={t:"s",v:v==null?"":String(v)};
+    if(s){cell.s=s;if(s.numFmt)cell.z=s.numFmt}
+    ws[enc(r,c)]=cell;};
+  const fin=(ws,rows,cols,widths)=>{ws["!ref"]=X.utils.encode_range({s:{r:0,c:0},e:{r:rows-1,c:cols-1}});ws["!cols"]=widths.map(w=>({wch:w}))};
+  const header=(ws,cols)=>cols.forEach((h,c)=>put(ws,0,c,h,S.head));
+  const won=a=>Math.round(Number(a)*10000);
+  const mlab=s=>{const d=pd(s);return `${d.getFullYear()}년 ${String(d.getMonth()+1).padStart(2,"0")}월`};
+  const MAXR=500;
+
+  // ---- ledger rows ----
+  const rows=allB().filter(x=>x.k!=="home"&&(bPaid(x)||x.k!=="opt"||bInc(x))).map(x=>{
+    const paid=bPaid(x), a=bAmt(x), has=a!=null&&a!=="";
+    const status=paid?"완료":(x.k==="tbd"&&!has?"견적 전":"예정");
+    const memo=[x.k==="opt"?"선택 항목":"",x.custom?"직접 추가":"",status==="견적 전"?"견적 받으면 예정 지출에 입력":""].filter(Boolean).join(", ");
+    return {x,paid,d:paid?bPd(x):x.d,status,cat:CATMAP[x.id]||"기타",amt:has?won(a):null,memo};
+  }).sort((a,b)=>pd(a.d)-pd(b.d)||(b.paid-a.paid));
+  const paidW=rows.reduce((s,r)=>s+(r.paid&&r.amt?r.amt:0),0);
+  const planW=rows.reduce((s,r)=>s+(!r.paid&&r.amt?r.amt:0),0);
+  const goal=BUDGET_MAX*10000, tbdN=rows.filter(r=>r.status==="견적 전").length;
+  const homeRows=allB().filter(x=>x.k==="home").sort((a,b)=>pd(a.d)-pd(b.d));
+  const homePaidW=homeRows.reduce((s,x)=>s+(bPaid(x)&&bAmt(x)!=null?won(bAmt(x)):0),0);
+
+  // ---- 요약 ----
+  const A={};
+  put(A,0,0,"웨딩 가계부",S.title);
+  put(A,1,0,`김현 & 인하 / 2027-04-18 K웨딩홀 / 금액 단위: 원`,S.sub);
+  const sumRows=[
+    ["목표 예산",goal,S.input,"결혼 최대 예산 3,000만 원 (예식, 신혼여행, 예물). 노란 칸은 직접 수정 가능"],
+    ["수입 합계",{f:`SUM('가계부'!H2:H${MAXR})`,v:0},S.big,"부모님 지원금 등"],
+    ["지출 완료",{f:`SUM('가계부'!I2:I${MAXR})`,v:paidW},S.big,"실제로 낸 돈"],
+    ["예정 지출",{f:`SUM('가계부'!J2:J${MAXR})`,v:planW},S.big,"앞으로 낼 돈 (견적 전 항목 제외)"],
+    ["총 예상 지출",{f:"B5+B6",v:paidW+planW},S.big,"지출 완료 + 예정 지출"],
+    ["현재 남은 예산",{f:"B3+B4-B5",v:goal-paidW},S.wonLeft,"목표 예산 + 수입 - 지출 완료"],
+    ["최종 예상 잔액",{f:"B3+B4-B7",v:goal-paidW-planW},S.wonLeft,"예정 지출까지 모두 냈을 때"],
+    ["견적 전 항목",tbdN,S.cnt,"금액을 입력하면 자동 반영"],
+  ];
+  sumRows.forEach((r,i)=>{put(A,2+i,0,r[0],S.lab);put(A,2+i,1,r[1],r[2]);put(A,2+i,2,r[3],S.txt)});
+  put(A,10,0,"신혼집 전세 납부",S.lab);put(A,10,1,homePaidW,S.big);put(A,10,2,"결혼 예산과 별도 (신혼집 전세 시트)",S.txt);
+  put(A,11,0,"기준일",S.lab);put(A,11,1,serial(todayStr()),S.date);put(A,11,2,"엑셀로 내려받은 날",S.txt);
+  put(A,12,0,"예식일",S.lab);put(A,12,1,serial("2027-04-18"),S.date);put(A,12,2,`D-${Math.max(0,diff(TODAY,WED))} (기준일 기준)`,S.txt);
+  ["사용법","1. 돈을 내면 가계부 시트에서 예정 지출 금액을 지출 칸으로 옮기고 상태를 '완료'로 바꾸세요.",
+   "2. 견적이 나오면 해당 줄의 예정 지출 칸에 금액을 입력하세요.",
+   "3. 수입이 생기면 가계부 시트에 줄을 추가해 수입 칸에 입력하면 남은 예산에 반영됩니다."]
+   .forEach((t,i)=>put(A,14+i,0,t,i===0?S.lab:S.note));
+  A["!merges"]=[{s:{r:0,c:0},e:{r:0,c:2}},{s:{r:1,c:0},e:{r:1,c:2}}];
+  A["!rows"]=[{hpt:28},{hpt:18}];
+  fin(A,18,3,[18,18,40]);
+
+  // ---- 가계부 ----
+  const G={};
+  const GH=["날짜","월","상태","분류","내역","결제처","결제수단","수입","지출","예정 지출","누적 지출","남은 예산","메모"];
+  header(G,GH);
+  let cum=0;
+  rows.forEach((r,i)=>{const R=i+1, E=R+1;
+    put(G,R,0,serial(r.d),S.date); put(G,R,1,mlab(r.d),S.ctr);
+    put(G,R,2,r.status,r.status==="완료"?S.stDone:r.status==="예정"?S.stPlan:S.stTbd);
+    put(G,R,3,r.cat,S.ctr); put(G,R,4,r.x.t,S.txt); put(G,R,5,r.x.w||"",S.txt); put(G,R,6,"",S.ctr);
+    put(G,R,7,"",S.wonIn);
+    if(r.paid&&r.amt){put(G,R,8,r.amt,S.wonOut);cum+=r.amt}else put(G,R,8,"",S.wonOut);
+    if(!r.paid&&r.amt)put(G,R,9,r.amt,S.wonPlan);else put(G,R,9,"",S.wonPlan);
+    put(G,R,10,{f:`SUM($I$2:I${E})`,v:cum},S.wonCum);
+    put(G,R,11,{f:`'요약'!$B$3+SUM($H$2:H${E})-K${E}`,v:goal-cum},S.wonLeft);
+    put(G,R,12,r.memo,S.txt);
+  });
+  const gR=rows.length+1;
+  put(G,gR,0,"합계",S.totL);[1,2,3,4,5,6].forEach(c=>put(G,gR,c,"",S.totL));
+  put(G,gR,7,{f:`SUM(H2:H${gR})`,v:0},S.totW);put(G,gR,8,{f:`SUM(I2:I${gR})`,v:paidW},S.totW);
+  put(G,gR,9,{f:`SUM(J2:J${gR})`,v:planW},S.totW);put(G,gR,10,"",S.totW);put(G,gR,11,"",S.totW);put(G,gR,12,"",S.totL);
+  G["!merges"]=[{s:{r:gR,c:0},e:{r:gR,c:6}}];
+  G["!autofilter"]={ref:X.utils.encode_range({s:{r:0,c:0},e:{r:rows.length,c:GH.length-1}})};
+  G["!rows"]=[{hpt:24}];
+  fin(G,gR+1,GH.length,[11,11,8,10,30,26,10,11,12,12,12,13,26]);
+
+  // ---- 월별 결산 ----
+  const M={};
+  header(M,["월","수입","지출 완료","예정 지출","월 합계","누적 합계"]);
+  const months=[...new Set(["2026-10-01","2026-11-01","2026-12-01","2027-01-01","2027-02-01","2027-03-01","2027-04-01"].map(mlab).concat(rows.map(r=>mlab(r.d))))].sort();
+  let mc=0;
+  months.forEach((m,i)=>{const R=i+1,E=R+1;
+    const inM=rows.filter(r=>mlab(r.d)===m);
+    const p=inM.reduce((s,r)=>s+(r.paid&&r.amt?r.amt:0),0), q=inM.reduce((s,r)=>s+(!r.paid&&r.amt?r.amt:0),0);
+    mc+=p+q;
+    const rng=c=>`'가계부'!$${c}$2:$${c}$${MAXR}`;
+    put(M,R,0,m,S.ctr);
+    put(M,R,1,{f:`SUMIFS(${rng("H")},${rng("B")},$A${E})`,v:0},S.wonIn);
+    put(M,R,2,{f:`SUMIFS(${rng("I")},${rng("B")},$A${E})`,v:p},S.wonOut);
+    put(M,R,3,{f:`SUMIFS(${rng("J")},${rng("B")},$A${E})`,v:q},S.wonPlan);
+    put(M,R,4,{f:`C${E}+D${E}`,v:p+q},S.won);
+    put(M,R,5,{f:`SUM($E$2:E${E})`,v:mc},S.wonCum);
+  });
+  const mR=months.length+1;
+  put(M,mR,0,"합계",S.totL);
+  ["B","C","D","E"].forEach((c,j)=>put(M,mR,j+1,{f:`SUM(${c}2:${c}${mR})`,v:[0,paidW,planW,paidW+planW][j]},S.totW));
+  put(M,mR,5,"",S.totW);
+  M["!rows"]=[{hpt:24}];
+  fin(M,mR+1,6,[14,13,13,13,13,14]);
+
+  // ---- 분류별 결산 ----
+  const C={};
+  header(C,["분류","지출 완료","예정 지출","합계","비중"]);
+  CAT_ORDER.forEach((k,i)=>{const R=i+1,E=R+1;
+    const inC=rows.filter(r=>r.cat===k);
+    const p=inC.reduce((s,r)=>s+(r.paid&&r.amt?r.amt:0),0), q=inC.reduce((s,r)=>s+(!r.paid&&r.amt?r.amt:0),0);
+    const rng=c=>`'가계부'!$${c}$2:$${c}$${MAXR}`;
+    put(C,R,0,k,S.ctr);
+    put(C,R,1,{f:`SUMIFS(${rng("I")},${rng("D")},$A${E})`,v:p},S.wonOut);
+    put(C,R,2,{f:`SUMIFS(${rng("J")},${rng("D")},$A${E})`,v:q},S.wonPlan);
+    put(C,R,3,{f:`B${E}+C${E}`,v:p+q},S.won);
+    put(C,R,4,{f:`IF('요약'!$B$7=0,0,D${E}/'요약'!$B$7)`,v:goal?(p+q)/goal:0},S.pct);
+  });
+  const cR=CAT_ORDER.length+1;
+  put(C,cR,0,"합계",S.totL);
+  ["B","C","D"].forEach((c,j)=>put(C,cR,j+1,{f:`SUM(${c}2:${c}${cR})`,v:[paidW,planW,paidW+planW][j]},S.totW));
+  put(C,cR,4,{f:`SUM(E2:E${cR})`,v:1},Object.assign({},S.totW,{numFmt:"0.0%"}));
+  C["!rows"]=[{hpt:24}];
+  fin(C,cR+1,5,[14,14,14,14,10]);
+
+  // ---- 신혼집 전세 ----
+  const Hm={};
+  header(Hm,["날짜","상태","항목","금액(원)","결제수단/비고"]);
+  homeRows.forEach((x,i)=>{const R=i+1,paid=bPaid(x),a=bAmt(x);
+    put(Hm,R,0,serial(paid?bPd(x):x.d),S.date);put(Hm,R,1,paid?"완료":"예정",paid?S.stDone:S.stPlan);
+    put(Hm,R,2,x.t,S.txt);put(Hm,R,3,a==null?"":won(a),paid?S.wonOut:S.wonPlan);put(Hm,R,4,x.w||"",S.txt)});
+  const hR=homeRows.length+1;
+  put(Hm,hR,0,"납부 합계",S.totL);put(Hm,hR,1,"",S.totL);put(Hm,hR,2,"",S.totL);
+  put(Hm,hR,3,{f:`SUMIFS(D2:D${hR},B2:B${hR},"완료")`,v:homePaidW},S.totW);put(Hm,hR,4,`보증금 ${(JEONSE*10000).toLocaleString("ko-KR")}원, 결혼 예산 3,000만 원과 별도`,S.txt);
+  Hm["!rows"]=[{hpt:24}];
+  fin(Hm,hR+1,5,[12,8,22,14,48]);
+
+  // ---- 일정 ----
+  const T2={};
+  const TH=["분류","할 일","시작","마감","유형","기준","완료","메모"];
+  header(T2,TH);
+  T.slice().sort((a,b)=>pd(a.s)-pd(b.s)||pd(a.e)-pd(b.e)).forEach((x,i)=>{const R=i+1;
+    put(T2,R,0,CATS[x.c].n,S.ctr);put(T2,R,1,x.t,S.txt);put(T2,R,2,serial(x.s),S.date);put(T2,R,3,serial(x.e),S.date);
+    put(T2,R,4,x.ms?"마일스톤":"기간",S.ctr);put(T2,R,5,x.b==="fix"?"계약서 기한":"권장 일정",S.ctr);
+    put(T2,R,6,done[x.id]?"완료":"",done[x.id]?S.stDone:S.ctr);put(T2,R,7,x.n||"",S.txt);
+  });
+  T2["!autofilter"]={ref:X.utils.encode_range({s:{r:0,c:0},e:{r:T.length,c:TH.length-1}})};
+  T2["!rows"]=[{hpt:24}];
+  fin(T2,T.length+1,TH.length,[14,32,11,11,9,11,7,70]);
+
+  const wb=X.utils.book_new();
+  X.utils.book_append_sheet(wb,A,"요약");
+  X.utils.book_append_sheet(wb,G,"가계부");
+  X.utils.book_append_sheet(wb,M,"월별 결산");
+  X.utils.book_append_sheet(wb,C,"분류별 결산");
+  X.utils.book_append_sheet(wb,Hm,"신혼집 전세");
+  X.utils.book_append_sheet(wb,T2,"일정");
+  return wb;
+}
+(async()=>{
+  try{if(window.claude&&typeof window.claude.use==="function")dlNs=await window.claude.use("downloads")}catch(e){dlNs=null}
+  if(dlNs)document.getElementById("xlBtn").hidden=false;
+})();
+document.getElementById("xlBtn").onclick=async()=>{
+  const btn=document.getElementById("xlBtn"),msg=document.getElementById("xlMsg");
+  if(!dlNs)return;
+  btn.disabled=true;msg.textContent="파일 만드는 중";
+  try{
+    const X=await loadXLSX();
+    const out=X.write(buildWorkbook(X),{bookType:"xlsx",type:"array",cellStyles:true});
+    const r=await dlNs.save({filename:`웨딩가계부_${todayStr().replace(/-/g,"")}.xlsx`,data:new Blob([out])});
+    msg.textContent=r&&r.status==="delivered"?"":"저장했습니다";
+  }catch(e){
+    const c=e&&e.code;
+    msg.textContent=c==="declined"?"저장을 취소했습니다"
+      :c==="rate_limited"?"저장 창이 이미 열려 있습니다. 잠시 후 다시 눌러 주세요"
+      :c==="extension_not_enabled"?"이 화면에서는 엑셀 저장을 쓸 수 없습니다"
+      :(e&&e.message==="load")?"엑셀 모듈을 불러오지 못했습니다. 네트워크를 확인해 주세요"
+      :"저장할 수 없습니다";
+    if(["unavailable","not_granted","capability_disabled","capability_removed"].includes(c))btn.hidden=true;
+  }finally{btn.disabled=false;setTimeout(()=>{msg.textContent=""},5000)}
+};
+
+// ---------- Vendors ----------
+const VENDORS=[
+ {id:"v1",n:"루나스포사",cat:"드레스 (지정샵)",addr:"부산진구 자유평화로 11 W웨딩시티 7층",q:"루나스포사",tasks:["d1","d7","d4"]},
+ {id:"v2",n:"코코드 브라이덜",cat:"드레스 (변경 가능)",addr:"부산진구 자유평화로 11 4층",q:"코코드브라이덜",tasks:["d1","d7","d4"]},
+ {id:"v3",n:"드벨르 마리에",cat:"드레스 (변경 가능)",addr:"수영구 남천바다로21번길 70",q:"드벨르마리에",tasks:["d1","d7","d4"]},
+ {id:"v4",n:"소울스튜디오",cat:"스튜디오",addr:"W웨딩시티 건물 내 (플래너 설명, 층 확인 필요)",q:"소울스튜디오 부산",tasks:["s1","s3","s6","s4","s5"]},
+ {id:"v5",n:"루미디아",cat:"촬영용 드레스 (선택)",addr:"",ig:"lumidia_dress",q:"루미디아 드레스",tasks:["s1","s3"]},
+ {id:"v6",n:"세븐스헤븐",cat:"본식 스냅/원판",addr:"",q:"세븐스헤븐 스냅",tasks:["r1","w5"]},
+ {id:"v7",n:"아뮤르",cat:"헤어메이크업 (신랑신부)",addr:"국민연금웨딩홀 3층",q:"아뮤르 메이크업",tasks:["r9","w3"]},
+ {id:"v8",n:"K웨딩홀",cat:"예식장/뷔페 (24층)",addr:"연제구 중앙대로 1217 국제신문 4층",tel:"051-555-9779",q:"K웨딩홀 부산",tasks:["p2","p4","b1","b2","b3","r7","r8","w1","w5"]}
+];
+let IG={};
+try{IG=JSON.parse(localStorage.getItem("wed-ig")||"{}")||{}}catch(e){IG={}}
+const igHandle=v=>IG[v.id]||v.ig||"";
+const igUrl=v=>{const h=igHandle(v);return h?`https://www.instagram.com/${encodeURIComponent(h)}/`:`https://www.instagram.com/explore/search/keyword/?q=${encodeURIComponent(v.q||v.n)}`};
+const nvUrl=v=>`https://search.naver.com/search.naver?query=${encodeURIComponent((v.q||v.n)+" 인스타그램")}`;
+function vchips(tid){
+  const vs=VENDORS.filter(v=>v.tasks.includes(tid));
+  if(!vs.length)return "";
+  return `<div class="vcards"><div class="vct">관련 업체</div>${vs.map(v=>{const h=igHandle(v);return `<div class="vcard">
+    <div class="vn">${esc(v.n)}<span class="vc">${esc(v.cat)}</span></div>
+    <div class="va">${esc(v.addr||"주소 미확인")}${v.tel?" / "+esc(v.tel):""}</div>
+    <div class="vb"><a class="${h?"ok":""}" href="${igUrl(v)}" target="_blank" rel="noopener">${h?"인스타 @"+esc(h):"인스타 검색"}</a><a href="${nvUrl(v)}" target="_blank" rel="noopener">네이버</a>${v.ig?"":`<input data-ig="${v.id}" value="${esc(IG[v.id]||"")}" placeholder="@계정 입력" aria-label="${esc(v.n)} 인스타 계정">`}</div>
+  </div>`}).join("")}</div>`;
+}
+function renderVendors(){
+  const el=document.getElementById("vendors");if(!el)return;
+  el.innerHTML=`<h3>업체 바로가기</h3><p class="vnote">계정이 확인된 곳은 인스타가 바로 열리고, 나머지는 인스타/네이버 검색으로 연결됩니다. 정확한 계정을 찾으면 입력칸에 넣어 두세요. 태그를 누르면 관련 일정이 열립니다.</p>`+
+  VENDORS.map(v=>{const h=igHandle(v);return `<div class="vrow">
+    <div><div class="vn">${esc(v.n)}</div><div class="vc">${esc(v.cat)}</div></div>
+    <div><div class="va">${esc(v.addr||"주소 미확인")}${v.tel?" / "+esc(v.tel):""}</div>
+      <div class="vt">${v.tasks.map(tid=>{const t=T.find(x=>x.id===tid);return t?`<span data-id="${tid}" style="border-color:${col(t.c)}">${esc(t.t)}</span>`:""}).join("")}</div></div>
+    <div class="vb"><a class="${h?"ok":""}" href="${igUrl(v)}" target="_blank" rel="noopener">${h?"@"+esc(h):"인스타 검색"}</a><a href="${nvUrl(v)}" target="_blank" rel="noopener">네이버</a>${v.ig?"":`<input data-ig="${v.id}" value="${esc(IG[v.id]||"")}" placeholder="@계정 입력" aria-label="${esc(v.n)} 인스타 계정">`}</div>
+  </div>`}).join("");
+}
+document.addEventListener("change",e=>{
+  const t=e.target;if(!t.dataset||!t.dataset.ig)return;
+  let h=t.value.trim();const k=h.indexOf("instagram.com/");if(k>=0)h=h.slice(k+14);
+  h=h.replace(/^@/,"").split("/")[0].split("?")[0].replace(/[^A-Za-z0-9._]/g,"");
+  if(h)IG[t.dataset.ig]=h;else delete IG[t.dataset.ig];
+  try{localStorage.setItem("wed-ig",JSON.stringify(IG))}catch(err){}
+  if(lastDet)showDetail(lastDet.items,lastDet.title);
+});
+
+let rt;window.addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(renderGantt,150)});
+renderAll();
+</script>
+</body>
+</html>
