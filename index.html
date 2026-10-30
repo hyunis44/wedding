@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>뽕야뽕야</title>
+<meta name="robots" content="noindex, nofollow">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap" rel="stylesheet">
@@ -154,11 +155,6 @@ button:focus-visible,input:focus-visible,.cell:focus-visible,.row:focus-visible{
 }
 .tabbar{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:14px}
 .tabbar .tabs{margin-bottom:0}
-.xlwrap{margin-left:auto;display:flex;align-items:center;gap:10px}
-.xl{font:inherit;font-weight:600;border:1.5px solid var(--c-ready);color:var(--c-ready);background:var(--surface);padding:7px 15px;border-radius:999px;cursor:pointer;white-space:nowrap}
-.xl:hover{background:color-mix(in srgb,var(--c-ready) 10%,var(--surface))}
-.xl:disabled{opacity:.6;cursor:wait}
-.xlmsg{font-size:13px;color:var(--muted)}
 /* Vendors */
 .vend{margin-top:14px;padding:4px 0 8px}
 .vend h3{font-family:"Gowun Batang",serif;font-size:18px;margin:12px 16px 2px}
@@ -208,7 +204,6 @@ button:focus-visible,input:focus-visible,.cell:focus-visible,.row:focus-visible{
     <button role="tab" aria-selected="false" data-view="cal">달력</button>
     <button role="tab" aria-selected="false" data-view="budget">예산</button>
   </div>
-  <div class="xlwrap"><span id="xlMsg" class="xlmsg" role="status"></span><button class="xl" id="xlBtn" hidden>엑셀 다운로드</button></div>
   </div>
 
   <div class="legend" id="legend"></div>
@@ -277,11 +272,11 @@ const T=[
  {id:"s4",c:"photo",t:"수정 컨펌 (셀렉 후 2~3회)",s:"2026-11-23",e:"2026-12-18",b:"rec",n:"11/21 셀렉 후 진행. 원본 구매 시: 원본 파일 수령, 앨범/액자 셀렉 후 2~3번 수정 컨펌, 수정본 파일(앨범 편집용) 수령. 미구매 시: 앨범과 액자만 수령, 수정 컨펌 불가, 사진 파일 없음. 원본 파일은 촬영 후 최대 1년 보관. 앨범 수령 기한은 아직 미확인."},
  {id:"s5",c:"photo",t:"수정본 파일 수령 (청첩장/영상용)",s:"2026-12-07",e:"2026-12-31",b:"rec",n:"원본 구매 완료(10-27). 11/21 셀렉과 수정 컨펌이 끝난 뒤 수령, 시기는 추정. 스튜디오 앨범은 셀렉 후 3~4개월, 액자는 예식 주 웨딩홀로 출고."},
 
- {id:"d1",c:"dress",t:"드레스샵 확정 (인스타 비교)",s:"2026-10-12",e:"2026-10-31",b:"rec",n:"지정샵 루나스포사, 코코드 브라이덜/드벨르 마리에로 변경 가능(추가금 없음). 1곳만 보면 5벌 비교. 투어 시 2곳 10만 원, 3곳 20만 원(샵별 3벌), 지정샵만 본 뒤 재투어 10만 원(3벌)."},
+ {id:"d1",c:"dress",t:"드레스샵 확정: 루나스포사 (변경 없음)",s:"2026-10-12",e:"2026-10-30",b:"rec",done:1,n:"10-30 확정: 장소 변경 없이 지정샵 루나스포사로 진행. 별도 드레스 투어는 하지 않고 2/10(수) 본식 드레스 셀렉 때 루나스포사 한 곳만 보기로 함(1곳만 보면 5벌 비교). 더 보고 싶으면 그때 재투어 문의(지정샵만 본 뒤 재투어 10만 원, 3벌). 참고: 코코드 브라이덜/드벨르 마리에로 변경 가능(추가금 없음), 투어 시 2곳 10만 원, 3곳 20만 원(샵별 3벌)."},
  {id:"d2",c:"dress",t:"결혼반지 결정 및 주문",s:"2026-10-12",e:"2026-12-31",b:"rec",n:"제작 기간 고려해 연내 주문 권장. 제휴 예물 할인은 결제액 5%, 최대 20만 원이며 금/다이아 제외로 표기됨."},
  {id:"d3",c:"dress",t:"신혼여행 예약",s:"2026-11-02",e:"2026-12-31",b:"rec",n:"제휴 여행사 계약 시 5만 원 할인(국내여행 제외)."},
- {id:"d7",c:"dress",t:"본식 드레스 일정 예약 요청",s:"2027-01-04",e:"2027-01-29",b:"rec",n:"늦으면 원하는 일정이 마감될 수 있어 미리 플래너에게 요청. 평일만 가능하니 연차 계획도 함께."},
- {id:"d4",c:"dress",t:"본식 드레스 셀렉 (평일)",s:"2027-02-16",e:"2027-03-05",b:"fix",n:"예식 1.5~2개월 전, 화~금만 가능(화~목 추천, 금요일은 드레스가 많이 빠짐). 시간 10:30/13:00/14:30/16:00/17:30(금 제외). 턱시도도 같은 날 함께 보고 소매/바지 기장 체크(빼고 개인 준비해도 금액 변동 없음). 업그레이드 시 50~200만 원 드레스샵 별도 결제."},
+ {id:"d7",c:"dress",t:"본식 드레스 일정 예약 요청",s:"2026-10-30",b:"rec",done:1,n:"10-30 인하가 단톡방에서 요청(1순위 2/5 금, 2순위 2/10 수, 둘 다 10:30). 플래너(스리, 김슬기 팀장)가 두 날짜 모두 가능하다고 답해 2/10(수) 10:30 루나스포사로 예약. 설 대체공휴일인 2/9(화)도 물었으나 샵 명절휴무라 불가."},
+ {id:"d4",c:"dress",t:"본식 드레스 셀렉 (루나스포사) 10:30",s:"2027-02-10",ms:1,b:"fix",n:"2/10(수) 10:30 루나스포사(부산진구 자유평화로 11 W웨딩시티 7층) 예약(10-30 단톡방, 플래너 스리). 헤메 리허설 없이 진행하므로 10:30 그대로 시작. 별도 투어 없이 이날 루나스포사 한 곳만 보고(5벌 비교), 더 필요하면 재투어 문의(10만 원, 3벌). 신랑 턱시도도 같은 날 보고 소매/바지 기장 체크(빼고 개인 준비해도 금액 변동 없음)라 둘 다 연차 필요. 설 연휴 2/6(토)~2/9(화, 대체공휴일) 바로 다음 날이고, 2/9는 샵 명절휴무. 업그레이드 시 50~200만 원 드레스샵 별도 결제. 참고: 셀렉은 예식 1.5~2개월 전 화~금(화~목 추천, 금요일은 드레스가 많이 빠짐), 시간 10:30/13:00/14:30/16:00/17:30(금 제외)."},
  {id:"d5",c:"dress",t:"혼주 한복 준비",s:"2027-01-04",e:"2027-03-13",b:"rec",n:"제휴 한복집 대여 3만, 맞춤 5만 원 할인."},
  {id:"d6",c:"dress",t:"혼수 선불카드 40만 원 사용",s:"2026-10-12",e:"2027-03-31",b:"rec",n:"사용처와 사용기한 확인 필요(안내지 손글씨 메모)."},
 
@@ -291,8 +286,8 @@ const T=[
  {id:"r4",c:"ready",t:"식전/감사 영상 직접 제작 (Claude)",s:"2027-02-01",e:"2027-03-27",b:"rec",n:"필요한 영상은 직접 찍은 사진이나 받은 앨범을 다시 촬영한 사진으로 Claude를 이용해 간단히 제작(10월에 만든 식전 영상 느낌). 웨딩홀 규격: MP4, 1920x1080, 24~30fps, 스테레오 44.1kHz, 화면비 4:3 또는 16:9. 로비 사이니지 모니터 영상은 W웨딩 신규 서비스로 아직 공지 전이며 추후 선택사항(지금은 안 해도 됨)."},
  {id:"r5",c:"ready",t:"부케 선택 (샘플 1~20번)",s:"2027-03-01",e:"2027-03-31",b:"rec",n:"부토니에와 혼주 코사지는 부케에 맞춰 세트 제작."},
  {id:"r6",c:"ready",t:"아버님 H/M, 플라워샤워 여부 결정",s:"2027-03-01",e:"2027-04-07",b:"rec",n:"잔금에 반영되므로 최종 체크 방문 전 결정. 플라워샤워(행진 후 축포)는 정가 15만 원, 지금은 이벤트가 10만 원이며 이벤트가 끝날 수 있어 할 생각이면 일찍 플래너에게 요청."},
- {id:"r9",c:"ready",t:"리허설 H/M 여부 결정 (신부)",s:"2026-10-12",e:"2026-10-23",b:"rec",n:"지명 포함 22만 원, 신부만(신랑 미포함). 아뮤르 인스타에서 코디쌤 확인 후 일정과 코디쌤을 플래너에게 요청. 촬영 당일 헤메는 스튜디오 자체에서 기본 진행하므로, 22만 원은 아뮤르 코디쌤을 지명하는 선택 옵션으로 보임(확답 전, 플래너에게 확인)."},
- {id:"r7",c:"ready",t:"식순 협의 (주례 없는 예식)",s:"2027-03-15",e:"2027-04-08",b:"rec",n:"사전 협의 필수. 당일 늦어지면 남은 식순이 빠질 수 있음."},
+ {id:"r9",c:"ready",t:"리허설 H/M 안 함으로 결정 (신부)",s:"2026-10-12",e:"2026-10-30",b:"rec",done:1,n:"10-30 결정: 헤메 리허설 없이 진행. 플래너 답변(10-30 단톡방): ① 리허설 H/M은 헤어메이크업만 미리 받아 보는 것이고, 웨딩홀에서 행진 같은 리허설을 하는 건 없음 ② 리허설 H/M을 하면 드레스 스케줄 전에 H/M을 받고 들어가서 원래 시간보다 조금 이른 시간에 시작 ③ 리허설 H/M에는 지명이 포함되고, 예식 당일에도 지명한 선생님이 그대로 진행. 비용은 지명 포함 22만 원, 신부만(신랑 미포함)."},
+ {id:"r7",c:"ready",t:"식순 협의 (주례 없는 예식)",s:"2027-03-15",e:"2027-04-08",b:"rec",n:"사전 협의 필수. 당일 늦어지면 남은 식순이 빠질 수 있음. 리허설 H/M에는 웨딩홀 행진 리허설이 포함되지 않으니(10-30 플래너 답변), 입장/퇴장 동선을 미리 걸어 볼 수 있는지 이때 함께 확인."},
  {id:"r8",c:"ready",t:"축가 MR(MP3)과 영상 제출",s:"2027-03-29",e:"2027-04-08",b:"rec",n:"k_weddinghall@naver.com, 안내받은 기한 내. 제출 후 어떤 이유로도 변경 불가."},
 
  {id:"g1",c:"guest",t:"하객 명단 초안 (양가)",s:"2026-11-02",e:"2027-01-29",b:"rec",n:"보증인원 판단의 기초 자료."},
@@ -308,7 +303,7 @@ const T=[
 
  {id:"w1",c:"week",t:"차량번호 3대, 원판 가족 명단 전달",s:"2027-04-01",e:"2027-04-08",b:"fix",n:"웨딩카 1대 + 양가 혼주 1대씩, 지상 1층 지정주차. 번호 틀리면 주차 불가. 원판 대상은 형제자매/배우자/자녀."},
  {id:"w2",c:"week",t:"접수대 담당자 교육, 가족 11시 집합 공지",s:"2027-04-10",e:"2027-04-16",b:"rec",n:"봉투 즉시 확인(빈 봉투/위조지폐), 가방 자리 비우지 않기, 화환 사진 촬영, 식권 추가는 4층 상담실 가족 직접 방문. 하객 주차는 2시간만 무료(연장 불가) 안내."},
- {id:"w3",c:"week",t:"헤어메이크업 시간 안내 받기",s:"2027-04-14",e:"2027-04-16",b:"fix",n:"예식 2~4일 전 샵에서 연락. 신랑신부는 국민연금웨딩홀 3층 아뮤르샵, 혼주는 K웨딩홀 4층."},
+ {id:"w3",c:"week",t:"헤어메이크업 시간 안내 받기",s:"2027-04-14",e:"2027-04-16",b:"fix",n:"예식 2~4일 전 샵에서 연락. 신랑신부는 국민연금웨딩홀 3층 아뮤르샵, 혼주는 K웨딩홀 4층. 리허설 H/M을 안 해서 지명은 없음, 본식 담당 선생님은 샵에서 배정될 것으로 보임(지명만 따로 되는지와 비용은 미확인, 원하면 플래너에게 문의). 원하는 헤어/메이크업 스타일 사진을 미리 골라 두면 당일 설명이 쉬움."},
  {id:"w4",c:"week",t:"당일 준비물 챙기기",s:"2027-04-13",e:"2027-04-17",b:"rec",n:"갈아입을 예복(스타킹, 구두, 넥타이, 벨트), 신랑 검정 구두/양말, 흰 봉투 여유분, 튼튼한 축의금 가방, 커플링만 착용."},
  {id:"j1",c:"home",t:"임대차 신고 (계약 30일 내)",s:"2026-10-26",e:"2026-11-24",b:"fix",n:"계약서 작성일 10-25 기준 30일 내 신고 의무(보증금 6천만 초과). 부동산거래관리시스템(RTMS) 온라인 또는 주민센터. 임차인 혼자 서명된 계약서를 내도 공동신고로 인정. 늦으면 과태료 2~30만 원."},
  {id:"j5",c:"home",t:"확정일자 받기",s:"2026-10-26",e:"2026-11-24",b:"fix",n:"계약서에 날짜 도장을 받아 우선변제권의 근거를 만듦. 임대차 신고 때 계약서를 첨부하면 자동 부여되므로 신고와 같이 끝낼 수 있음. 따로 받으려면 주민센터(600원) 또는 인터넷등기소(500원). 입주 전에 받아 두어도 됨."},
@@ -461,8 +456,8 @@ const BI=[
  {id:"m5",t:"스튜디오 사진 원본 구매",a:33,d:"2026-10-27",w:"스튜디오 현장 / 카드",k:"fix",paid:1},
  {id:"m6",t:"스튜디오 촬영드레스 추가금",a:38.5,d:"2026-10-27",w:"스튜디오 현장 / 메리스 드레스 16.5만 + 첫 드레스 22만 (결제수단 미기재)",k:"fix",paid:1},
  {id:"m7",t:"루미디아 사전 피팅",a:5,d:"2026-10-26",w:"루미디아 (방문 1회, 추가금 드레스 별도)",k:"opt",inc:0},
- {id:"m8",t:"드레스 투어",a:10,d:"2026-10-31",w:"드레스샵 (2곳 10, 3곳 20)",k:"opt",inc:0},
- {id:"m9",t:"본식 드레스 업그레이드",a:50,d:"2027-02-27",w:"드레스샵 (50~200)",k:"opt",inc:0},
+ {id:"m8",t:"드레스 재투어 (필요 시)",a:10,d:"2027-02-10",w:"10-30 별도 투어 안 하기로 함. 2/10 루나스포사 1곳(5벌)을 본 뒤 더 보고 싶을 때만 재투어 10만 원(3벌)",k:"opt",inc:0},
+ {id:"m9",t:"본식 드레스 업그레이드",a:50,d:"2027-02-10",w:"2/10 루나스포사 셀렉 때 결정, 드레스샵 별도 결제 (50~200)",k:"opt",inc:0},
  {id:"m10",t:"감사 선물 상품권",a:50,d:"2027-03-19",w:"재원/소현 부부",k:"fix",link:"b4"},
  {id:"m11",t:"웨딩홀 잔금",a:170,d:"2027-04-08",w:"웨딩홀 4층",k:"fix",link:"p4"},
  {id:"m12",t:"아버님 헤어메이크업 2인",a:10,d:"2027-04-08",w:"잔금 합산",k:"opt",inc:1},
@@ -470,7 +465,6 @@ const BI=[
  {id:"m14",t:"뷔페 식사비 150명 (계약금 차감)",a:700,d:"2027-04-18",w:"24층 뷔페 카운터",k:"fix"},
  {id:"m15",t:"여유식권 사용분 (15장 가정)",a:75,d:"2027-04-18",w:"24층 뷔페 카운터",k:"opt",inc:1},
  {id:"m16",t:"소인 식사 (10명 가정)",a:25,d:"2027-04-18",w:"24층 뷔페 카운터",k:"opt",inc:1},
- {id:"m30",t:"리허설 H/M (신부, 지명 포함)",a:22,d:"2026-10-27",w:"아뮤르 코디쌤 지명 옵션 (확인 필요)",k:"opt",inc:0},
  {id:"m20",t:"촬영용 한복 대여 (한복 선택 시)",a:null,d:"2026-10-26",w:"한복집",k:"tbd"},
  {id:"m21",t:"결혼반지",a:null,d:"2026-12-31",w:"예물샵",k:"tbd"},
  {id:"m22",t:"신혼여행",a:null,d:"2026-12-31",w:"여행사",k:"tbd"},
@@ -565,229 +559,11 @@ document.getElementById("nAdd").onclick=()=>{
   bsave();tEl.value="";aEl.value="";dEl.value="";renderBudget();
 };
 
-// ---------- Excel export (가계부) ----------
-const XLSX_URL="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js";
-let xlLib=null, dlNs=null;
-function loadXLSX(){
-  if(window.XLSX)return Promise.resolve(window.XLSX);
-  if(xlLib)return xlLib;
-  xlLib=new Promise((res,rej)=>{const s=document.createElement("script");s.src=XLSX_URL;
-    s.onload=()=>window.XLSX?res(window.XLSX):rej(new Error("load"));
-    s.onerror=()=>{xlLib=null;rej(new Error("load"))};document.head.appendChild(s)});
-  return xlLib;
-}
-const serial=s=>{const[a,b,c]=s.split("-").map(Number);return (Date.UTC(a,b-1,c)-Date.UTC(1899,11,30))/DAY};
-const CATMAP={m1:"웨딩홀",m2:"뷔페",m3:"웨딩홀",m4:"촬영/영상",m5:"촬영/영상",m6:"드레스",m7:"드레스",m8:"드레스",m9:"드레스",
-  m10:"선물/사례",m11:"웨딩홀",m12:"웨딩홀",m13:"웨딩홀",m14:"뷔페",m15:"뷔페",m16:"뷔페",m20:"한복/예복",m21:"예물",
-  m22:"신혼여행",m23:"촬영/영상",m24:"청첩장",m25:"한복/예복",m26:"촬영/영상",m27:"청첩장",m28:"한복/예복",m29:"선물/사례"};
-const CAT_ORDER=["웨딩홀","뷔페","촬영/영상","드레스","예물","한복/예복","신혼여행","청첩장","선물/사례","기타"];
-
-function buildWorkbook(X){
-  const FN="맑은 고딕", LN={style:"thin",color:{rgb:"D9DEE6"}}, BOR={top:LN,bottom:LN,left:LN,right:LN};
-  const base={font:{name:FN,sz:10,color:{rgb:"1F2A44"}},alignment:{vertical:"center"},border:BOR};
-  const mk=(o)=>({font:Object.assign({},base.font,o.font||{}),alignment:Object.assign({},base.alignment,o.alignment||{}),
-    border:o.noBorder?{}:BOR,fill:o.fill?{patternType:"solid",fgColor:{rgb:o.fill}}:undefined,numFmt:o.numFmt});
-  const S={
-    head:mk({font:{bold:true,color:{rgb:"FFFFFF"}},fill:"1F2A44",alignment:{horizontal:"center",wrapText:true}}),
-    txt:mk({}), ctr:mk({alignment:{horizontal:"center"}}), date:mk({alignment:{horizontal:"center"},numFmt:"yyyy-mm-dd"}),
-    won:mk({numFmt:"#,##0"}), wonIn:mk({numFmt:"#,##0",font:{color:{rgb:"1F6FB2"}}}),
-    wonOut:mk({numFmt:"#,##0",font:{bold:true}}), wonPlan:mk({numFmt:"#,##0",font:{color:{rgb:"7A4E91"}}}),
-    wonCum:mk({numFmt:"#,##0",fill:"F3F5F8"}), wonLeft:mk({numFmt:"#,##0",fill:"EAF4EE",font:{bold:true,color:{rgb:"2E6B4B"}}}),
-    pct:mk({numFmt:"0.0%",alignment:{horizontal:"right"}}),
-    stDone:mk({alignment:{horizontal:"center"},fill:"E3F1E8",font:{bold:true,color:{rgb:"2E6B4B"}}}),
-    stPlan:mk({alignment:{horizontal:"center"},fill:"F1E8F5",font:{color:{rgb:"7A4E91"}}}),
-    stTbd:mk({alignment:{horizontal:"center"},fill:"FBF0E1",font:{color:{rgb:"8A6D3B"}}}),
-    totL:mk({fill:"E9ECF2",font:{bold:true},alignment:{horizontal:"center"}}),
-    totW:mk({fill:"E9ECF2",font:{bold:true},numFmt:"#,##0"}),
-    title:mk({noBorder:true,font:{sz:16,bold:true}}), sub:mk({noBorder:true,font:{sz:10,color:{rgb:"667085"}}}),
-    lab:mk({fill:"F3F5F8",font:{bold:true}}), input:mk({fill:"FFF4D6",numFmt:"#,##0",font:{bold:true}}),
-    big:mk({numFmt:"#,##0",font:{bold:true,sz:11}}), cnt:mk({numFmt:"0\"건\"",alignment:{horizontal:"right"}}),
-    note:mk({noBorder:true,font:{sz:9,color:{rgb:"667085"}},alignment:{wrapText:false}}),
-  };
-  const enc=(r,c)=>X.utils.encode_cell({r,c});
-  const put=(ws,r,c,v,s)=>{let cell;
-    if(v&&typeof v==="object"&&"f" in v)cell={t:"n",f:v.f,v:v.v||0};
-    else if(typeof v==="number")cell={t:"n",v};
-    else cell={t:"s",v:v==null?"":String(v)};
-    if(s){cell.s=s;if(s.numFmt)cell.z=s.numFmt}
-    ws[enc(r,c)]=cell;};
-  const fin=(ws,rows,cols,widths)=>{ws["!ref"]=X.utils.encode_range({s:{r:0,c:0},e:{r:rows-1,c:cols-1}});ws["!cols"]=widths.map(w=>({wch:w}))};
-  const header=(ws,cols)=>cols.forEach((h,c)=>put(ws,0,c,h,S.head));
-  const won=a=>Math.round(Number(a)*10000);
-  const mlab=s=>{const d=pd(s);return `${d.getFullYear()}년 ${String(d.getMonth()+1).padStart(2,"0")}월`};
-  const MAXR=500;
-
-  // ---- ledger rows ----
-  const rows=allB().filter(x=>x.k!=="home"&&(bPaid(x)||x.k!=="opt"||bInc(x))).map(x=>{
-    const paid=bPaid(x), a=bAmt(x), has=a!=null&&a!=="";
-    const status=paid?"완료":(x.k==="tbd"&&!has?"견적 전":"예정");
-    const memo=[x.k==="opt"?"선택 항목":"",x.custom?"직접 추가":"",status==="견적 전"?"견적 받으면 예정 지출에 입력":""].filter(Boolean).join(", ");
-    return {x,paid,d:paid?bPd(x):x.d,status,cat:CATMAP[x.id]||"기타",amt:has?won(a):null,memo};
-  }).sort((a,b)=>pd(a.d)-pd(b.d)||(b.paid-a.paid));
-  const paidW=rows.reduce((s,r)=>s+(r.paid&&r.amt?r.amt:0),0);
-  const planW=rows.reduce((s,r)=>s+(!r.paid&&r.amt?r.amt:0),0);
-  const goal=BUDGET_MAX*10000, tbdN=rows.filter(r=>r.status==="견적 전").length;
-  const homeRows=allB().filter(x=>x.k==="home").sort((a,b)=>pd(a.d)-pd(b.d));
-  const homePaidW=homeRows.reduce((s,x)=>s+(bPaid(x)&&bAmt(x)!=null?won(bAmt(x)):0),0);
-
-  // ---- 요약 ----
-  const A={};
-  put(A,0,0,"웨딩 가계부",S.title);
-  put(A,1,0,`김현 & 인하 / 2027-04-18 K웨딩홀 / 금액 단위: 원`,S.sub);
-  const sumRows=[
-    ["목표 예산",goal,S.input,"결혼 최대 예산 3,000만 원 (예식, 신혼여행, 예물). 노란 칸은 직접 수정 가능"],
-    ["수입 합계",{f:`SUM('가계부'!H2:H${MAXR})`,v:0},S.big,"부모님 지원금 등"],
-    ["지출 완료",{f:`SUM('가계부'!I2:I${MAXR})`,v:paidW},S.big,"실제로 낸 돈"],
-    ["예정 지출",{f:`SUM('가계부'!J2:J${MAXR})`,v:planW},S.big,"앞으로 낼 돈 (견적 전 항목 제외)"],
-    ["총 예상 지출",{f:"B5+B6",v:paidW+planW},S.big,"지출 완료 + 예정 지출"],
-    ["현재 남은 예산",{f:"B3+B4-B5",v:goal-paidW},S.wonLeft,"목표 예산 + 수입 - 지출 완료"],
-    ["최종 예상 잔액",{f:"B3+B4-B7",v:goal-paidW-planW},S.wonLeft,"예정 지출까지 모두 냈을 때"],
-    ["견적 전 항목",tbdN,S.cnt,"금액을 입력하면 자동 반영"],
-  ];
-  sumRows.forEach((r,i)=>{put(A,2+i,0,r[0],S.lab);put(A,2+i,1,r[1],r[2]);put(A,2+i,2,r[3],S.txt)});
-  put(A,10,0,"신혼집 전세 납부",S.lab);put(A,10,1,homePaidW,S.big);put(A,10,2,"결혼 예산과 별도 (신혼집 전세 시트)",S.txt);
-  put(A,11,0,"기준일",S.lab);put(A,11,1,serial(todayStr()),S.date);put(A,11,2,"엑셀로 내려받은 날",S.txt);
-  put(A,12,0,"예식일",S.lab);put(A,12,1,serial("2027-04-18"),S.date);put(A,12,2,`D-${Math.max(0,diff(TODAY,WED))} (기준일 기준)`,S.txt);
-  ["사용법","1. 돈을 내면 가계부 시트에서 예정 지출 금액을 지출 칸으로 옮기고 상태를 '완료'로 바꾸세요.",
-   "2. 견적이 나오면 해당 줄의 예정 지출 칸에 금액을 입력하세요.",
-   "3. 수입이 생기면 가계부 시트에 줄을 추가해 수입 칸에 입력하면 남은 예산에 반영됩니다."]
-   .forEach((t,i)=>put(A,14+i,0,t,i===0?S.lab:S.note));
-  A["!merges"]=[{s:{r:0,c:0},e:{r:0,c:2}},{s:{r:1,c:0},e:{r:1,c:2}}];
-  A["!rows"]=[{hpt:28},{hpt:18}];
-  fin(A,18,3,[18,18,40]);
-
-  // ---- 가계부 ----
-  const G={};
-  const GH=["날짜","월","상태","분류","내역","결제처","결제수단","수입","지출","예정 지출","누적 지출","남은 예산","메모"];
-  header(G,GH);
-  let cum=0;
-  rows.forEach((r,i)=>{const R=i+1, E=R+1;
-    put(G,R,0,serial(r.d),S.date); put(G,R,1,mlab(r.d),S.ctr);
-    put(G,R,2,r.status,r.status==="완료"?S.stDone:r.status==="예정"?S.stPlan:S.stTbd);
-    put(G,R,3,r.cat,S.ctr); put(G,R,4,r.x.t,S.txt); put(G,R,5,r.x.w||"",S.txt); put(G,R,6,"",S.ctr);
-    put(G,R,7,"",S.wonIn);
-    if(r.paid&&r.amt){put(G,R,8,r.amt,S.wonOut);cum+=r.amt}else put(G,R,8,"",S.wonOut);
-    if(!r.paid&&r.amt)put(G,R,9,r.amt,S.wonPlan);else put(G,R,9,"",S.wonPlan);
-    put(G,R,10,{f:`SUM($I$2:I${E})`,v:cum},S.wonCum);
-    put(G,R,11,{f:`'요약'!$B$3+SUM($H$2:H${E})-K${E}`,v:goal-cum},S.wonLeft);
-    put(G,R,12,r.memo,S.txt);
-  });
-  const gR=rows.length+1;
-  put(G,gR,0,"합계",S.totL);[1,2,3,4,5,6].forEach(c=>put(G,gR,c,"",S.totL));
-  put(G,gR,7,{f:`SUM(H2:H${gR})`,v:0},S.totW);put(G,gR,8,{f:`SUM(I2:I${gR})`,v:paidW},S.totW);
-  put(G,gR,9,{f:`SUM(J2:J${gR})`,v:planW},S.totW);put(G,gR,10,"",S.totW);put(G,gR,11,"",S.totW);put(G,gR,12,"",S.totL);
-  G["!merges"]=[{s:{r:gR,c:0},e:{r:gR,c:6}}];
-  G["!autofilter"]={ref:X.utils.encode_range({s:{r:0,c:0},e:{r:rows.length,c:GH.length-1}})};
-  G["!rows"]=[{hpt:24}];
-  fin(G,gR+1,GH.length,[11,11,8,10,30,26,10,11,12,12,12,13,26]);
-
-  // ---- 월별 결산 ----
-  const M={};
-  header(M,["월","수입","지출 완료","예정 지출","월 합계","누적 합계"]);
-  const months=[...new Set(["2026-10-01","2026-11-01","2026-12-01","2027-01-01","2027-02-01","2027-03-01","2027-04-01"].map(mlab).concat(rows.map(r=>mlab(r.d))))].sort();
-  let mc=0;
-  months.forEach((m,i)=>{const R=i+1,E=R+1;
-    const inM=rows.filter(r=>mlab(r.d)===m);
-    const p=inM.reduce((s,r)=>s+(r.paid&&r.amt?r.amt:0),0), q=inM.reduce((s,r)=>s+(!r.paid&&r.amt?r.amt:0),0);
-    mc+=p+q;
-    const rng=c=>`'가계부'!$${c}$2:$${c}$${MAXR}`;
-    put(M,R,0,m,S.ctr);
-    put(M,R,1,{f:`SUMIFS(${rng("H")},${rng("B")},$A${E})`,v:0},S.wonIn);
-    put(M,R,2,{f:`SUMIFS(${rng("I")},${rng("B")},$A${E})`,v:p},S.wonOut);
-    put(M,R,3,{f:`SUMIFS(${rng("J")},${rng("B")},$A${E})`,v:q},S.wonPlan);
-    put(M,R,4,{f:`C${E}+D${E}`,v:p+q},S.won);
-    put(M,R,5,{f:`SUM($E$2:E${E})`,v:mc},S.wonCum);
-  });
-  const mR=months.length+1;
-  put(M,mR,0,"합계",S.totL);
-  ["B","C","D","E"].forEach((c,j)=>put(M,mR,j+1,{f:`SUM(${c}2:${c}${mR})`,v:[0,paidW,planW,paidW+planW][j]},S.totW));
-  put(M,mR,5,"",S.totW);
-  M["!rows"]=[{hpt:24}];
-  fin(M,mR+1,6,[14,13,13,13,13,14]);
-
-  // ---- 분류별 결산 ----
-  const C={};
-  header(C,["분류","지출 완료","예정 지출","합계","비중"]);
-  CAT_ORDER.forEach((k,i)=>{const R=i+1,E=R+1;
-    const inC=rows.filter(r=>r.cat===k);
-    const p=inC.reduce((s,r)=>s+(r.paid&&r.amt?r.amt:0),0), q=inC.reduce((s,r)=>s+(!r.paid&&r.amt?r.amt:0),0);
-    const rng=c=>`'가계부'!$${c}$2:$${c}$${MAXR}`;
-    put(C,R,0,k,S.ctr);
-    put(C,R,1,{f:`SUMIFS(${rng("I")},${rng("D")},$A${E})`,v:p},S.wonOut);
-    put(C,R,2,{f:`SUMIFS(${rng("J")},${rng("D")},$A${E})`,v:q},S.wonPlan);
-    put(C,R,3,{f:`B${E}+C${E}`,v:p+q},S.won);
-    put(C,R,4,{f:`IF('요약'!$B$7=0,0,D${E}/'요약'!$B$7)`,v:goal?(p+q)/goal:0},S.pct);
-  });
-  const cR=CAT_ORDER.length+1;
-  put(C,cR,0,"합계",S.totL);
-  ["B","C","D"].forEach((c,j)=>put(C,cR,j+1,{f:`SUM(${c}2:${c}${cR})`,v:[paidW,planW,paidW+planW][j]},S.totW));
-  put(C,cR,4,{f:`SUM(E2:E${cR})`,v:1},Object.assign({},S.totW,{numFmt:"0.0%"}));
-  C["!rows"]=[{hpt:24}];
-  fin(C,cR+1,5,[14,14,14,14,10]);
-
-  // ---- 신혼집 전세 ----
-  const Hm={};
-  header(Hm,["날짜","상태","항목","금액(원)","결제수단/비고"]);
-  homeRows.forEach((x,i)=>{const R=i+1,paid=bPaid(x),a=bAmt(x);
-    put(Hm,R,0,serial(paid?bPd(x):x.d),S.date);put(Hm,R,1,paid?"완료":"예정",paid?S.stDone:S.stPlan);
-    put(Hm,R,2,x.t,S.txt);put(Hm,R,3,a==null?"":won(a),paid?S.wonOut:S.wonPlan);put(Hm,R,4,x.w||"",S.txt)});
-  const hR=homeRows.length+1;
-  put(Hm,hR,0,"납부 합계",S.totL);put(Hm,hR,1,"",S.totL);put(Hm,hR,2,"",S.totL);
-  put(Hm,hR,3,{f:`SUMIFS(D2:D${hR},B2:B${hR},"완료")`,v:homePaidW},S.totW);put(Hm,hR,4,`보증금 ${(JEONSE*10000).toLocaleString("ko-KR")}원, 결혼 예산 3,000만 원과 별도`,S.txt);
-  Hm["!rows"]=[{hpt:24}];
-  fin(Hm,hR+1,5,[12,8,22,14,48]);
-
-  // ---- 일정 ----
-  const T2={};
-  const TH=["분류","할 일","시작","마감","유형","기준","완료","메모"];
-  header(T2,TH);
-  T.slice().sort((a,b)=>pd(a.s)-pd(b.s)||pd(a.e)-pd(b.e)).forEach((x,i)=>{const R=i+1;
-    put(T2,R,0,CATS[x.c].n,S.ctr);put(T2,R,1,x.t,S.txt);put(T2,R,2,serial(x.s),S.date);put(T2,R,3,serial(x.e),S.date);
-    put(T2,R,4,x.ms?"마일스톤":"기간",S.ctr);put(T2,R,5,x.b==="fix"?"계약서 기한":"권장 일정",S.ctr);
-    put(T2,R,6,done[x.id]?"완료":"",done[x.id]?S.stDone:S.ctr);put(T2,R,7,x.n||"",S.txt);
-  });
-  T2["!autofilter"]={ref:X.utils.encode_range({s:{r:0,c:0},e:{r:T.length,c:TH.length-1}})};
-  T2["!rows"]=[{hpt:24}];
-  fin(T2,T.length+1,TH.length,[14,32,11,11,9,11,7,70]);
-
-  const wb=X.utils.book_new();
-  X.utils.book_append_sheet(wb,A,"요약");
-  X.utils.book_append_sheet(wb,G,"가계부");
-  X.utils.book_append_sheet(wb,M,"월별 결산");
-  X.utils.book_append_sheet(wb,C,"분류별 결산");
-  X.utils.book_append_sheet(wb,Hm,"신혼집 전세");
-  X.utils.book_append_sheet(wb,T2,"일정");
-  return wb;
-}
-(async()=>{
-  try{if(window.claude&&typeof window.claude.use==="function")dlNs=await window.claude.use("downloads")}catch(e){dlNs=null}
-  if(dlNs)document.getElementById("xlBtn").hidden=false;
-})();
-document.getElementById("xlBtn").onclick=async()=>{
-  const btn=document.getElementById("xlBtn"),msg=document.getElementById("xlMsg");
-  if(!dlNs)return;
-  btn.disabled=true;msg.textContent="파일 만드는 중";
-  try{
-    const X=await loadXLSX();
-    const out=X.write(buildWorkbook(X),{bookType:"xlsx",type:"array",cellStyles:true});
-    const r=await dlNs.save({filename:`웨딩가계부_${todayStr().replace(/-/g,"")}.xlsx`,data:new Blob([out])});
-    msg.textContent=r&&r.status==="delivered"?"":"저장했습니다";
-  }catch(e){
-    const c=e&&e.code;
-    msg.textContent=c==="declined"?"저장을 취소했습니다"
-      :c==="rate_limited"?"저장 창이 이미 열려 있습니다. 잠시 후 다시 눌러 주세요"
-      :c==="extension_not_enabled"?"이 화면에서는 엑셀 저장을 쓸 수 없습니다"
-      :(e&&e.message==="load")?"엑셀 모듈을 불러오지 못했습니다. 네트워크를 확인해 주세요"
-      :"저장할 수 없습니다";
-    if(["unavailable","not_granted","capability_disabled","capability_removed"].includes(c))btn.hidden=true;
-  }finally{btn.disabled=false;setTimeout(()=>{msg.textContent=""},5000)}
-};
-
 // ---------- Vendors ----------
 const VENDORS=[
- {id:"v1",n:"루나스포사",cat:"드레스 (지정샵)",addr:"부산진구 자유평화로 11 W웨딩시티 7층",q:"루나스포사",tasks:["d1","d7","d4"]},
- {id:"v2",n:"코코드 브라이덜",cat:"드레스 (변경 가능)",addr:"부산진구 자유평화로 11 4층",q:"코코드브라이덜",tasks:["d1","d7","d4"]},
- {id:"v3",n:"드벨르 마리에",cat:"드레스 (변경 가능)",addr:"수영구 남천바다로21번길 70",q:"드벨르마리에",tasks:["d1","d7","d4"]},
+ {id:"v1",n:"루나스포사",cat:"드레스 (확정, 2/10 본식 셀렉)",addr:"부산진구 자유평화로 11 W웨딩시티 7층",q:"루나스포사",tasks:["d1","d7","d4"]},
+ {id:"v2",n:"코코드 브라이덜",cat:"드레스 (재투어 후보)",addr:"부산진구 자유평화로 11 4층",q:"코코드브라이덜",tasks:["d1"]},
+ {id:"v3",n:"드벨르 마리에",cat:"드레스 (재투어 후보)",addr:"수영구 남천바다로21번길 70",q:"드벨르마리에",tasks:["d1"]},
  {id:"v4",n:"소울스튜디오",cat:"스튜디오",addr:"W웨딩시티 건물 내 (플래너 설명, 층 확인 필요)",q:"소울스튜디오 부산",tasks:["s1","s3","s6","s4","s5"]},
  {id:"v5",n:"루미디아",cat:"촬영용 드레스 (선택)",addr:"",ig:"lumidia_dress",q:"루미디아 드레스",tasks:["s1","s3"]},
  {id:"v6",n:"세븐스헤븐",cat:"본식 스냅/원판",addr:"",q:"세븐스헤븐 스냅",tasks:["r1","w5"]},
